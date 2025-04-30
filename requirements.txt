@@ -1,0 +1,4 @@
+scikit-learn==1.3.0
+joblib==1.3.2
+numpy==1.24.4
+git+https://github.com/remla25-team15/lib-ml.git@v0.1.2

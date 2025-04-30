@@ -1,0 +1,19 @@
+# Ignore Python virtual environment
+venv/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Ignore model artifacts
+*.joblib
+*.pkl
+
+# Ignore IDE/editor config files
+.vscode/
+.idea/
+
+# Ignore build artifacts
+dist/
+build/
+*.egg-info/
