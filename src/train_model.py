@@ -1,4 +1,5 @@
 import argparse
+import os
 import pickle
 
 import pandas as pd
@@ -31,6 +32,7 @@ def main():
     X, cv = libml._preprocess(messages)
     y = messages.iloc[:, -1].values
 
+    os.makedirs("output", exist_ok=True)
     bow_path = args.output + 'c1_BoW_Sentiment_Model.pkl'
     pickle.dump(cv, open(bow_path, "wb"))
 
