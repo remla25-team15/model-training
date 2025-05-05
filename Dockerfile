@@ -16,4 +16,4 @@ COPY datasets/ datasets/
 RUN mkdir -p output
 
 ENTRYPOINT ["python"]
-CMD ["src/train_model.py", "--dataset", "datasets/a1_RestaurantReviews_HistoricDump.tsv", "--output", "output/model.pkl"]
+CMD ["src/train_model.py", "--dataset", "datasets/a1_RestaurantReviews_HistoricDump.tsv", "--output", "output/"]
