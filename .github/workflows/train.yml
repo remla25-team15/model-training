@@ -1,0 +1,28 @@
+name: Train and Save Model
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  train-model:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run and build Docker container
+        run: |
+          docker build -t sentiment-trainer .
+          docker run --rm -v ${{ github.workspace }}:/app sentiment-trainer
+
+      - name: Upload trained model artifacts
+        uses: actions/upload-artifact@v4
+        with:
+            name: trained-models
+            path: output/
