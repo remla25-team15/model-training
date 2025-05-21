@@ -19,8 +19,8 @@ stages:
     deps:
     - path: src/prepare_data.py
       hash: md5
-      md5: 95e040aa31c8ab617dd00018af664c0f
-      size: 1264
+      md5: fe6779847ddfe352733370ec43d0d8ce
+      size: 1468
     outs:
     - path: data/X.npy
       hash: md5
@@ -32,7 +32,7 @@ stages:
       size: 7328
     - path: output/c1_BoW_Sentiment_Model.pkl
       hash: md5
-      md5: 0a5458b2675c76d538456979639d8f85
+      md5: 45ca2ac2b6a935943a5cf45179f74544
       size: 39718
   train_model:
     cmd: python src/train.py --data data/X.npy --labels data/y.npy --output output/
@@ -85,8 +85,8 @@ stages:
       size: 46247
     - path: src/evaluate.py
       hash: md5
-      md5: f3976d777d4b9a76efac2e289ba24c5f
-      size: 1158
+      md5: a58aab7a272a114154cd5dbe5fc07cb5
+      size: 1176
     outs:
     - path: metrics/eval.json
       hash: md5
