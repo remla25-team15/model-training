@@ -10,19 +10,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  train-model:
-    runs-on: ubuntu-24.04
+  run-pipeline:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-      - name: Run and build Docker container
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
         run: |
-          docker build -t sentiment-trainer .
-          docker run --rm -v ${{ github.workspace }}:/app sentiment-trainer
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Write GDrive SA key
+        run: |
+          mkdir -p secrets
+          echo "${{ secrets.GDRIVE_SA_KEY }}" > secrets/sa_key.json
+
+      - name: Set env for DVC
+        run: echo "DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=secrets/sa_key.json" >> $GITHUB_ENV
+
+      - name: Pull data with DVC
+        run: dvc pull -v
+
+      - name: Reproduce pipeline
+        run: dvc repro
+
+      - name: Upload evaluation metrics
+        uses: actions/upload-artifact@v3
+        with:
+          name: eval-metrics
+          path: metrics/eval.json
 
       - name: Upload trained model artifacts
         uses: actions/upload-artifact@v4
         with:
-            name: trained-models
-            path: output/
+          name: trained-models
+          path: output/

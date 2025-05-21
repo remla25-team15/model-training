@@ -1,0 +1,17 @@
+# Ignore model artifacts
+output/
+*.pkl
+
+# Ignore data and intermediate artifacts
+data/
+datasets/
+*.npy
+
+# Ignore secrets
+secrets/
+
+# Ignore config and cache files
+__pycache__/
+.nltk/
+.nltk_data/
+*.log
