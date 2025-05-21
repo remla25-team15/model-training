@@ -24,14 +24,23 @@ def download_from_drive(file_id, output_path):
     gdown.download(url, output_path, quiet=False)
 
 
-def download_nltk_resources():
+def download_nltk_resources(nltk_data_dir):
     """
     Ensure required NLTK corpora are downloaded.
+
+    Args:
+        nltk_data_dir (str): Local directory to store NLTK data.
     """
+
+    os.makedirs(nltk_data_dir, exist_ok=True)
+
+    # Set NLTK environment to use the local directory
+    nltk.data.path.append(nltk_data_dir)
+
     try:
         nltk.data.find("corpora/wordnet")
     except LookupError:
-        nltk.download("wordnet")
+        nltk.download("wordnet", download_dir=nltk_data_dir)
 
 
 def main():
@@ -46,6 +55,12 @@ def main():
         type=str,
         default="datasets",
         help="Directory to save downloaded files.",
+    )
+    parser.add_argument(
+        "--nltk_dir",
+        type=str,
+        default="nltk_data",
+        help="Directory to save NLTK data.",
     )
     args = parser.parse_args()
 
@@ -64,7 +79,7 @@ def main():
     download_from_drive(file_id_2, output_path_2)
 
     # NLTK corpora
-    download_nltk_resources()
+    download_nltk_resources(args.nltk_dir)
 
 
 if __name__ == "__main__":

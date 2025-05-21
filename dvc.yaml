@@ -1,8 +1,8 @@
 stages:
   get_data:
-    cmd: python get_data.py --output_dir datasets
+    cmd: python src/get_data.py --output_dir datasets
     deps:
-    - src/get_data.py
+      - src/get_data.py
     outs:
-    - datasets/
-    - nltk_data
+      - datasets/
+      - nltk_data/
