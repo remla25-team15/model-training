@@ -25,5 +25,3 @@ secrets/
 *.zip
 *.gz
 *.whl
-/datasets
-/nltk_data
