@@ -20,7 +20,22 @@ For team 15 members only.
 
 We use Google Drive as DVC remote, specifically the [remla_resources](https://drive.google.com/drive/folders/1bxRbOXRah2lb_E8Ec6X6yDO9vYUj5OFT?usp=sharing) folder.
 
-You need to be logged in to the remlateam15 google account to access this.
+You need to be logged in to the remlateam15 google account to access this directly.
+
+You can add the remote storage to your dvc config using:
+
+```zsh
+dvc remote add myremote gdrive://1bxRbOXRah2lb_E8Ec6X6yDO9vYUj5OFT
+```
+
+Set this remote as your default remote for future push and pull operations:
+
+```zsh
+dvc remote default myremote
+```
+
+To access the remote storage using dvc, you need to set up an API key. Our preferred way of doing this
+is using a service account.
 
 We already have a service account called "remla-dvc-project" created on our Google Cloud project called "remla-team-15". Please login to the
 common remlateam15@gmail.com account and check it out on the Google Cloud console dashboard [https://console.cloud.google.com/](https://console.cloud.google.com/).
@@ -42,6 +57,12 @@ dvc remote modify myremote --local gdrive_service_account_json_file_path secrets
 ```
 
 The local config doesn't get pushed to GitHub and nor does the `secrets/` folder.
+
+If everything went correctly, you should be able to pull from dvc remote using:
+
+```zsh
+dvc pull
+```
 
 ---
 
@@ -71,6 +92,14 @@ pip install -r requirements.txt
 ```
 
 ### 2. Run the DVC pipeline
+
+Pull from dvc remote to get the latest experiments
+
+```bash
+dvc pull
+```
+
+Run the pipeline
 
 ```bash
 dvc repro
@@ -102,6 +131,14 @@ You can also do this through the CLI:
 
 ```zsh
 dvc exp run -S train.random_state=45
+```
+
+## Pushing to remote
+
+If you have everything setup correctly, you should also be able to push to the remote storage by running:
+
+```zsh
+dvc push
 ```
 
 ---
