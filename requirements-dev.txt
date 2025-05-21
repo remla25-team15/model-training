@@ -8,3 +8,8 @@ pre-commit
 mypy
 ipython
 pytest
+pytest-cov
+pandas
+numpy
+scikit-learn
+memory_profiler

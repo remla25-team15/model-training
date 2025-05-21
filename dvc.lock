@@ -5,8 +5,8 @@ stages:
     deps:
     - path: src/get_data.py
       hash: md5
-      md5: 44a3470236b2132e182b2b1616bb27a6
-      size: 1886
+      md5: 43d80c25a4ba3bf231cafc27b586c240
+      size: 1964
     outs:
     - path: datasets/
       hash: md5
@@ -19,8 +19,8 @@ stages:
     deps:
     - path: src/prepare_data.py
       hash: md5
-      md5: fe6779847ddfe352733370ec43d0d8ce
-      size: 1468
+      md5: c30b6404097559ace17da2407dcf1456
+      size: 1517
     outs:
     - path: data/X.npy
       hash: md5
@@ -32,8 +32,8 @@ stages:
       size: 7328
     - path: output/c1_BoW_Sentiment_Model.pkl
       hash: md5
-      md5: 45ca2ac2b6a935943a5cf45179f74544
-      size: 39718
+      md5: 33adaa0357272ac9fcba66c72c39f889
+      size: 34038
   train_model:
     cmd: python src/train.py --data data/X.npy --labels data/y.npy --output output/
       --split_output_dir data/split --train_metrics_output metrics/train.json
@@ -48,12 +48,12 @@ stages:
       size: 7328
     - path: params.yaml
       hash: md5
-      md5: 16ad5c6b145d70c3241cfe48cb52fb10
-      size: 203
+      md5: 4afd735d900edd82c44e18160f729e36
+      size: 209
     - path: src/train.py
       hash: md5
-      md5: 4eefba6156cede73aceebfe5177f0b8f
-      size: 3016
+      md5: 7dce77d1f6364e46d3ce89d9fa68b3f5
+      size: 3107
     params:
       params.yaml:
         train.priors:
@@ -72,8 +72,8 @@ stages:
       size: 1568
     - path: metrics/train.json
       hash: md5
-      md5: c997999eeda65dff3a0d028a60a57416
-      size: 42
+      md5: fe454256564430f4f589e435bb46f15f
+      size: 44
     - path: output/c2_Classifier_Sentiment_Model.pkl
       hash: md5
       md5: b06be03960c0bdd2d3db53318bd676d7
@@ -96,10 +96,10 @@ stages:
       size: 46247
     - path: src/evaluate.py
       hash: md5
-      md5: bb14df9a001b70142fce8dd351765f82
-      size: 1506
+      md5: 6310dbd2846d7fb62d1c85f2a5229f75
+      size: 1566
     outs:
     - path: metrics/eval.json
       hash: md5
-      md5: 4eed0efd48f0dc36e8980a05937774b4
-      size: 228
+      md5: 6d310bed7076352c61e955758b053623
+      size: 243
