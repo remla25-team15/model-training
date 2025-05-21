@@ -25,3 +25,4 @@ secrets/
 *.zip
 *.gz
 *.whl
+datasets/
