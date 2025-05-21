@@ -7,10 +7,12 @@ Training script for sentiment classifier using Gaussian Naive Bayes.
 """
 
 import argparse
+import json
 import os
 
 import joblib
 import numpy as np
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
@@ -27,6 +29,11 @@ def main():
     parser.add_argument(
         "--split_output_dir", type=str, help="Optional dir to save split test sets"
     )
+    parser.add_argument(
+        "--train_metrics_output",
+        type=str,
+        help="Optional path to save training metrics JSON",
+    )
     args = parser.parse_args()
 
     X = np.load(args.data)
@@ -38,11 +45,26 @@ def main():
 
     if args.train_all:
         model.fit(X, y)
+        if args.train_metrics_output:
+            y_pred = model.predict(X)
+            acc = accuracy_score(y, y_pred)
+            metrics = {"train_accuracy": acc}
+            os.makedirs(os.path.dirname(args.train_metrics_output), exist_ok=True)
+            with open(args.train_metrics_output, "w", encoding="utf-8") as f:
+                json.dump(metrics, f, indent=2)
     else:
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=20
         )
         model.fit(X_train, y_train)
+        if args.train_metrics_output:
+            y_pred = model.predict(X_train)
+            acc = accuracy_score(y_train, y_pred)
+            metrics = {"train_accuracy": acc}
+            os.makedirs(os.path.dirname(args.train_metrics_output), exist_ok=True)
+            with open(args.train_metrics_output, "w", encoding="utf-8") as f:
+                json.dump(metrics, f, indent=2)
+
         if args.split_output_dir:
             os.makedirs(args.split_output_dir, exist_ok=True)
             np.save(os.path.join(args.split_output_dir, "X_test.npy"), X_test)

@@ -36,7 +36,7 @@ stages:
       size: 39718
   train_model:
     cmd: python src/train.py --data data/X.npy --labels data/y.npy --output output/
-      --split_output_dir data/split
+      --split_output_dir data/split --train_metrics_output metrics/train.json
     deps:
     - path: data/X.npy
       hash: md5
@@ -46,10 +46,10 @@ stages:
       hash: md5
       md5: b80a2d74a94a02652bf37dcc4a2bba6d
       size: 7328
-    - path: src/train_model.py
+    - path: src/train.py
       hash: md5
-      md5: 18700e489bd03c9ac8d22858ed60b6b4
-      size: 1990
+      md5: bae098e95fe1f8c8ca20c31440b3f548
+      size: 2595
     outs:
     - path: data/split/X_test.npy
       hash: md5
@@ -59,6 +59,10 @@ stages:
       hash: md5
       md5: a2a49dc0a7d720f205b1babec864aa6a
       size: 1568
+    - path: metrics/train.json
+      hash: md5
+      md5: 5f07bca36ed344721822c800b248665f
+      size: 42
     - path: output/c2_Classifier_Sentiment_Model.pkl
       hash: md5
       md5: d1efe821809be433279a0958bb7313f9

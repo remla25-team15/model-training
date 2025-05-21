@@ -15,12 +15,14 @@ stages:
       - output/c1_BoW_Sentiment_Model.pkl
   train_model:
     cmd: python src/train.py --data data/X.npy --labels data/y.npy
-      --output output/ --split_output_dir data/split
+      --output output/ --split_output_dir data/split --train_metrics_output metrics/train.json
     deps:
       - data/X.npy
       - data/y.npy
-      - src/train_model.py
+      - src/train.py
     outs:
       - data/split/X_test.npy
       - data/split/y_test.npy
       - output/c2_Classifier_Sentiment_Model.pkl
+    metrics:
+      - metrics/train.json
