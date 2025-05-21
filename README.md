@@ -25,7 +25,7 @@ You need to be logged in to the remlateam15 google account to access this.
 We already have a service account called "remla-dvc-project" created on our Google Cloud project called "remla-team-15". Please login to the
 common remlateam15@gmail.com account and check it out on the Google Cloud console dashboard [https://console.cloud.google.com/](https://console.cloud.google.com/).
 
-You don't need to create a new service account, you only need to add a new key for yourselves.
+You **DO NOT** need to create a new service account, you only need to add a new key for yourselves.
 Please read the docs and only follow the part from "Select your service account and go to the Keys tab..."
 
 You can read the DVC docs [here](https://dvc.org/doc/user-guide/data-management/remote-storage/google-drive#using-service-accounts)
