@@ -1,0 +1,20 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python src/get_data.py --output_dir datasets
+    deps:
+    - path: src/get_data.py
+      hash: md5
+      md5: 3d9de33b0c8b027dc20538ced7f74874
+      size: 2159
+    outs:
+    - path: datasets/
+      hash: md5
+      md5: 706d6ab9d8fddff5a47d00b0f65208b8.dir
+      size: 61190
+      nfiles: 2
+    - path: nltk_data/
+      hash: md5
+      md5: e5492a96d13403f58aae666212b7cdfa.dir
+      size: 10775600
+      nfiles: 1
