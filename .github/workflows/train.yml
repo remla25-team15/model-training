@@ -28,7 +28,7 @@ jobs:
       - name: Write GDrive SA key
         run: |
           mkdir -p secrets
-          echo "${{ secrets.GDRIVE_SA_KEY }}" > secrets/sa_key.json
+          echo '${{ secrets.GDRIVE_SA_KEY }}' > secrets/sa_key.json
       - name: Set env for DVC
         run: echo "DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=secrets/sa_key.json" >> $GITHUB_ENV
 
