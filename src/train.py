@@ -1,0 +1,55 @@
+"""
+Training script for sentiment classifier using Gaussian Naive Bayes.
+
+- Loads preprocessed data (X and y).
+- Either trains on the full dataset or performs a train/test split.
+- Saves the trained model and optionally the test set for evaluation.
+"""
+
+import argparse
+import os
+
+import joblib
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+
+
+def main():
+    """
+    Main function for training a Naive Bayes classifier.
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--X", type=str, required=True)
+    parser.add_argument("--y", type=str, required=True)
+    parser.add_argument("--output_model", type=str, required=True)
+    parser.add_argument("--train_all", action="store_true")
+    parser.add_argument(
+        "--split_output_dir", type=str, help="Optional dir to save split test sets"
+    )
+    args = parser.parse_args()
+
+    X = np.load(args.X)
+    y = np.load(args.y)
+
+    os.makedirs(os.path.dirname(args.output_model), exist_ok=True)
+
+    model = GaussianNB()
+
+    if args.train_all:
+        model.fit(X, y)
+    else:
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=20
+        )
+        model.fit(X_train, y_train)
+        if args.split_output_dir:
+            os.makedirs(args.split_output_dir, exist_ok=True)
+            np.save(os.path.join(args.split_output_dir, "X_test.npy"), X_test)
+            np.save(os.path.join(args.split_output_dir, "y_test.npy"), y_test)
+
+    joblib.dump(model, args.output_model)
+
+
+if __name__ == "__main__":
+    main()
