@@ -45,7 +45,8 @@ Please read the docs and only follow the part from "Select your service account 
 
 You can read the DVC docs [here](https://dvc.org/doc/user-guide/data-management/remote-storage/google-drive#using-service-accounts)
 
-After you create the key, you can download it to `secrets/sa_key.json` (you may need to create a new folder called `secrets/`)
+After you create the key, you can download it to `secrets/sa_key.json` (you may
+need to create a new folder called `secrets/` at the root of this project.)
 
 Make sure you have the file at that location.
 
