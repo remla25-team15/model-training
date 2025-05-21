@@ -197,7 +197,7 @@ good-names=i,
            Run,
            X_train,
            X_test,
-           X
+           X,
            _
 
 # Good variable names regexes, separated by a comma. If names match any regex,

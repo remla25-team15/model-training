@@ -20,8 +20,8 @@ It includes Docker support for reproducibility and a GitHub Actions workflow to 
 
 For team 15 members only.
 
-We already have a service account called "remla-dvc-project" created on our Google Cloud project. Please login to the
-common remlateam15@gmail.com account and check it out.
+We already have a service account called "remla-dvc-project" created on our Google Cloud project called "remla-team-15". Please login to the
+common remlateam15@gmail.com account and check it out on the Google Cloud console dashboard [https://console.cloud.google.com/](https://console.cloud.google.com/).
 
 You don't need to create a new service account, you only need to add a new key for yourselves.
 Please read the docs and only follow the part from "Select your service account and go to the Keys tab..."
@@ -30,13 +30,16 @@ You can read the DVC docs [here](https://dvc.org/doc/user-guide/data-management/
 
 After you create the key, you can download it to `secrets/sa_key.json` (you may need to create a new folder called `secrets/`)
 
-Make sure you have the file at that location. You can add it to your local dvc config:
+Make sure you have the file at that location.
+
+(Optional)
+You can also add the key to your local dvc config:
 
 ```zsh
 dvc remote modify myremote --local gdrive_service_account_json_file_path secrets/sa_key.json
 ```
 
-The local config doesn't get pushed to GitHub and not does the `secrets/` folder.
+The local config doesn't get pushed to GitHub and nor does the `secrets/` folder.
 
 ## Training with Docker
 

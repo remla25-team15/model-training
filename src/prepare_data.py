@@ -31,7 +31,12 @@ def main():
     os.makedirs(args.bow_dir, exist_ok=True)
 
     messages = pd.read_csv(args.dataset, delimiter="\t", quoting=3)
-    X, cv = libml._preprocess(messages)
+
+    # (Shreyas): This is an issue in libml where we have put an
+    # underscore "_" before the name of every function,
+    # we need to fix it there and remove them
+    X, cv = libml._preprocess(messages)  # pylint: disable=protected-access
+
     y = messages.iloc[:, -1].values
 
     np.save(os.path.join(args.output_dir, "X.npy"), X)

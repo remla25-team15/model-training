@@ -35,7 +35,7 @@ def main():
 
     metrics = {"accuracy": acc, "confusion_matrix": cm.tolist()}
 
-    with open(args.metrics_output, "w") as f:
+    with open(args.metrics_output, "w", encoding="utf-8") as f:
         json.dump(metrics, f, indent=2)
 
     print("Evaluation complete. Accuracy:", acc)
