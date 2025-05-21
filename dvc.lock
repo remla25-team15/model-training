@@ -67,3 +67,28 @@ stages:
       hash: md5
       md5: d1efe821809be433279a0958bb7313f9
       size: 46247
+  evaluate:
+    cmd: python src/evaluate.py --X_test data/split/X_test.npy --y_test data/split/y_test.npy
+      --model output/c2_Classifier_Sentiment_Model.pkl --metrics_output metrics/eval.json
+    deps:
+    - path: data/split/X_test.npy
+      hash: md5
+      md5: 16c66a2eb3e877234b1b9aa15b6b3aa3
+      size: 2046368
+    - path: data/split/y_test.npy
+      hash: md5
+      md5: a2a49dc0a7d720f205b1babec864aa6a
+      size: 1568
+    - path: output/c2_Classifier_Sentiment_Model.pkl
+      hash: md5
+      md5: d1efe821809be433279a0958bb7313f9
+      size: 46247
+    - path: src/evaluate.py
+      hash: md5
+      md5: f3976d777d4b9a76efac2e289ba24c5f
+      size: 1158
+    outs:
+    - path: metrics/eval.json
+      hash: md5
+      md5: 772ee529212b997a10002cac767d443a
+      size: 128

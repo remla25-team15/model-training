@@ -26,3 +26,14 @@ stages:
       - output/c2_Classifier_Sentiment_Model.pkl
     metrics:
       - metrics/train.json
+  evaluate:
+    cmd:
+      python src/evaluate.py --X_test data/split/X_test.npy --y_test data/split/y_test.npy
+      --model output/c2_Classifier_Sentiment_Model.pkl --metrics_output metrics/eval.json
+    deps:
+      - src/evaluate.py
+      - data/split/X_test.npy
+      - data/split/y_test.npy
+      - output/c2_Classifier_Sentiment_Model.pkl
+    metrics:
+      - metrics/eval.json
