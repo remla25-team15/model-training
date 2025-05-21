@@ -59,7 +59,7 @@ We also need to add more linters like flake8 and Bandit.
 
 ---
 
-## Training without Docker
+## Training
 
 ### 1. Install Dependencies
 
@@ -74,6 +74,34 @@ pip install -r requirements.txt
 
 ```bash
 dvc repro
+```
+
+## Running experiments with DVC
+
+We use **DVC experiments** to manage and track machine learning experiments.
+
+To run the pipeline and capture experimental results, use:
+
+```zsh
+dvc exp run
+```
+
+This command executes the pipeline defined in `dvc.yaml` using the parameters from `params.yaml`.
+It tracks outputs, metrics, and changes, letting you iterate quickly without committing to Git every time.
+
+To view and compare experiments:
+
+```zsh
+dvc exp show
+```
+
+You can modify hyperparameters in `params.yaml` and rerun `dvc exp run` to test different configurations.
+DVC will log each run as a separate experiment that you can compare and manage.
+
+You can also do this through the CLI:
+
+```zsh
+dvc exp run -S train.random_state=45
 ```
 
 ---
