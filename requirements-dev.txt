@@ -1,0 +1,10 @@
+-r requirements.txt
+
+# Dev tools
+pylint
+black
+flake8
+pre-commit
+mypy
+ipython
+pytest
