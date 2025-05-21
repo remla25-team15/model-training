@@ -22,13 +22,13 @@ We use Google Drive as DVC remote, specifically the [remla_resources](https://dr
 
 You need to be logged in to the remlateam15 google account to access this directly.
 
-You can add the remote storage to your dvc config using:
+This should already be present in our `.dvc/config` but if it isn't, you can add the remote storage to your dvc config using:
 
 ```zsh
 dvc remote add myremote gdrive://1bxRbOXRah2lb_E8Ec6X6yDO9vYUj5OFT
 ```
 
-Set this remote as your default remote for future push and pull operations:
+Set this remote as your default remote for future push and pull operations: (again, this should already be present in the config)
 
 ```zsh
 dvc remote default myremote
