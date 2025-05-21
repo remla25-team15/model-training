@@ -20,19 +20,19 @@ def main():
     Main function for training a Naive Bayes classifier.
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("--X", type=str, required=True)
-    parser.add_argument("--y", type=str, required=True)
-    parser.add_argument("--output_model", type=str, required=True)
+    parser.add_argument("--data", type=str, required=True)
+    parser.add_argument("--labels", type=str, required=True)
+    parser.add_argument("--output", type=str, required=True)
     parser.add_argument("--train_all", action="store_true")
     parser.add_argument(
         "--split_output_dir", type=str, help="Optional dir to save split test sets"
     )
     args = parser.parse_args()
 
-    X = np.load(args.X)
-    y = np.load(args.y)
+    X = np.load(args.data)
+    y = np.load(args.labels)
 
-    os.makedirs(os.path.dirname(args.output_model), exist_ok=True)
+    os.makedirs(args.output, exist_ok=True)
 
     model = GaussianNB()
 
@@ -48,7 +48,7 @@ def main():
             np.save(os.path.join(args.split_output_dir, "X_test.npy"), X_test)
             np.save(os.path.join(args.split_output_dir, "y_test.npy"), y_test)
 
-    joblib.dump(model, args.output_model)
+    joblib.dump(model, args.output + "c2_Classifier_Sentiment_Model.pkl")
 
 
 if __name__ == "__main__":

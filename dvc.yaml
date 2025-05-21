@@ -6,10 +6,21 @@ stages:
     outs:
       - datasets/
   preprocess:
-    cmd: python src/prepare_data.py --output_dir data/ --dataset datasets/a1_RestaurantReviews_HistoricDump.tsv
+    cmd: python src/prepare_data.py --output_dir data/ --dataset datasets/a1_RestaurantReviews_HistoricDump.tsv --bow_dir output/
     deps:
       - src/prepare_data.py
     outs:
       - data/X.npy
-      - data/cv.pkl
       - data/y.npy
+      - output/c1_BoW_Sentiment_Model.pkl
+  train_model:
+    cmd: python src/train.py --data data/X.npy --labels data/y.npy
+      --output output/ --split_output_dir data/split
+    deps:
+      - data/X.npy
+      - data/y.npy
+      - src/train_model.py
+    outs:
+      - data/split/X_test.npy
+      - data/split/y_test.npy
+      - output/c2_Classifier_Sentiment_Model.pkl

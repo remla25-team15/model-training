@@ -24,9 +24,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, required=True)
     parser.add_argument("--output_dir", type=str, required=True)
+    parser.add_argument("--bow_dir", type=str, required=True)
     args = parser.parse_args()
 
     os.makedirs(args.output_dir, exist_ok=True)
+    os.makedirs(args.bow_dir, exist_ok=True)
 
     messages = pd.read_csv(args.dataset, delimiter="\t", quoting=3)
     X, cv = libml._preprocess(messages)
@@ -34,7 +36,7 @@ def main():
 
     np.save(os.path.join(args.output_dir, "X.npy"), X)
     np.save(os.path.join(args.output_dir, "y.npy"), y)
-    with open(os.path.join(args.output_dir, "cv.pkl"), "wb") as f:
+    with open(os.path.join(args.bow_dir, "c1_BoW_Sentiment_Model.pkl"), "wb") as f:
         pickle.dump(cv, f)
 
 

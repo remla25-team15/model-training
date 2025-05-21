@@ -15,21 +15,51 @@ stages:
       nfiles: 2
   preprocess:
     cmd: python src/prepare_data.py --output_dir data/ --dataset datasets/a1_RestaurantReviews_HistoricDump.tsv
+      --bow_dir output/
     deps:
     - path: src/prepare_data.py
       hash: md5
-      md5: 893f60746adc6d272e04461fdf2fbdc7
-      size: 1140
+      md5: 95e040aa31c8ab617dd00018af664c0f
+      size: 1264
     outs:
     - path: data/X.npy
       hash: md5
       md5: f10f362d41996fd6bc87cb2b8780be29
       size: 10231328
-    - path: data/cv.pkl
-      hash: md5
-      md5: 08415528d68e65db465a6b6cc84155b7
-      size: 39718
     - path: data/y.npy
       hash: md5
       md5: b80a2d74a94a02652bf37dcc4a2bba6d
       size: 7328
+    - path: output/c1_BoW_Sentiment_Model.pkl
+      hash: md5
+      md5: 0a5458b2675c76d538456979639d8f85
+      size: 39718
+  train_model:
+    cmd: python src/train.py --data data/X.npy --labels data/y.npy --output output/
+      --split_output_dir data/split
+    deps:
+    - path: data/X.npy
+      hash: md5
+      md5: f10f362d41996fd6bc87cb2b8780be29
+      size: 10231328
+    - path: data/y.npy
+      hash: md5
+      md5: b80a2d74a94a02652bf37dcc4a2bba6d
+      size: 7328
+    - path: src/train_model.py
+      hash: md5
+      md5: 18700e489bd03c9ac8d22858ed60b6b4
+      size: 1990
+    outs:
+    - path: data/split/X_test.npy
+      hash: md5
+      md5: 16c66a2eb3e877234b1b9aa15b6b3aa3
+      size: 2046368
+    - path: data/split/y_test.npy
+      hash: md5
+      md5: a2a49dc0a7d720f205b1babec864aa6a
+      size: 1568
+    - path: output/c2_Classifier_Sentiment_Model.pkl
+      hash: md5
+      md5: d1efe821809be433279a0958bb7313f9
+      size: 46247
