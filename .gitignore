@@ -26,3 +26,4 @@ secrets/
 *.gz
 *.whl
 datasets/
+/datasets
