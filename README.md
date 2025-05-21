@@ -14,11 +14,13 @@ It includes Docker support for reproducibility and a GitHub Actions workflow to 
 
 ---
 
----
-
 ## Setting up service account key
 
 For team 15 members only.
+
+We use Google Drive as DVC remote, specifically the [remla_resources](https://drive.google.com/drive/folders/1bxRbOXRah2lb_E8Ec6X6yDO9vYUj5OFT?usp=sharing) folder.
+
+You need to be logged in to the remlateam15 google account to access this.
 
 We already have a service account called "remla-dvc-project" created on our Google Cloud project called "remla-team-15". Please login to the
 common remlateam15@gmail.com account and check it out on the Google Cloud console dashboard [https://console.cloud.google.com/](https://console.cloud.google.com/).
