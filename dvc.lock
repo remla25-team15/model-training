@@ -36,7 +36,8 @@ stages:
       size: 39718
   train_model:
     cmd: python src/train.py --data data/X.npy --labels data/y.npy --output output/
-      --split_output_dir data/split --train_metrics_output metrics/train.json
+      --train_all false --split_output_dir data/split --train_metrics_output metrics/train.json
+      --test_size 0.2 --random_state 45
     deps:
     - path: data/X.npy
       hash: md5
@@ -46,26 +47,35 @@ stages:
       hash: md5
       md5: b80a2d74a94a02652bf37dcc4a2bba6d
       size: 7328
+    - path: params.yaml
+      hash: md5
+      md5: bf2ec0faef17ce87c37c874b4d5c32e3
+      size: 62
     - path: src/train.py
       hash: md5
-      md5: bae098e95fe1f8c8ca20c31440b3f548
-      size: 2595
+      md5: d7fefc4a7aec787a7aea70e331c6d714
+      size: 2800
+    params:
+      params.yaml:
+        train.random_state: 45
+        train.test_size: 0.2
+        train.train_all: false
     outs:
     - path: data/split/X_test.npy
       hash: md5
-      md5: 16c66a2eb3e877234b1b9aa15b6b3aa3
+      md5: fb799880e99c2a9387c6579697e3eab9
       size: 2046368
     - path: data/split/y_test.npy
       hash: md5
-      md5: a2a49dc0a7d720f205b1babec864aa6a
+      md5: ffff2dee900c1b578db40ddfcb531002
       size: 1568
     - path: metrics/train.json
       hash: md5
-      md5: 5f07bca36ed344721822c800b248665f
+      md5: c997999eeda65dff3a0d028a60a57416
       size: 42
     - path: output/c2_Classifier_Sentiment_Model.pkl
       hash: md5
-      md5: d1efe821809be433279a0958bb7313f9
+      md5: b06be03960c0bdd2d3db53318bd676d7
       size: 46247
   evaluate:
     cmd: python src/evaluate.py --X_test data/split/X_test.npy --y_test data/split/y_test.npy
@@ -73,15 +83,15 @@ stages:
     deps:
     - path: data/split/X_test.npy
       hash: md5
-      md5: 16c66a2eb3e877234b1b9aa15b6b3aa3
+      md5: fb799880e99c2a9387c6579697e3eab9
       size: 2046368
     - path: data/split/y_test.npy
       hash: md5
-      md5: a2a49dc0a7d720f205b1babec864aa6a
+      md5: ffff2dee900c1b578db40ddfcb531002
       size: 1568
     - path: output/c2_Classifier_Sentiment_Model.pkl
       hash: md5
-      md5: d1efe821809be433279a0958bb7313f9
+      md5: b06be03960c0bdd2d3db53318bd676d7
       size: 46247
     - path: src/evaluate.py
       hash: md5
@@ -90,5 +100,5 @@ stages:
     outs:
     - path: metrics/eval.json
       hash: md5
-      md5: 772ee529212b997a10002cac767d443a
+      md5: 6e3027b6e1b1aca9f8f5959e926382f3
       size: 128

@@ -25,7 +25,9 @@ def main():
     parser.add_argument("--data", type=str, required=True)
     parser.add_argument("--labels", type=str, required=True)
     parser.add_argument("--output", type=str, required=True)
-    parser.add_argument("--train_all", action="store_true")
+    parser.add_argument(
+        "--train_all", type=lambda x: (str(x).lower() == "true"), default=False
+    )
     parser.add_argument(
         "--split_output_dir", type=str, help="Optional dir to save split test sets"
     )
@@ -34,6 +36,8 @@ def main():
         type=str,
         help="Optional path to save training metrics JSON",
     )
+    parser.add_argument("--test_size", type=float, default=0.2)
+    parser.add_argument("--random_state", type=int, default=20)
     args = parser.parse_args()
 
     X = np.load(args.data)
@@ -54,7 +58,7 @@ def main():
                 json.dump(metrics, f, indent=2)
     else:
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=20
+            X, y, test_size=args.test_size, random_state=args.random_state
         )
         model.fit(X_train, y_train)
         if args.train_metrics_output:
