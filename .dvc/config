@@ -1,0 +1,9 @@
+[core]
+    analytics = false
+    remote = myremote
+['remote "myremote"']
+    url = gdrive://1bxRbOXRah2lb_E8Ec6X6yDO9vYUj5OFT
+    gdrive_client_id = 25021044702-g9nrb5d0gbo0dv8r9hokphh26jnk5hn0.apps.googleusercontent.com
+    gdrive_client_secret = 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
+    gdrive_use_service_account = true
+    gdrive_service_account_json_file_path = ../secrets/sa_key.json
