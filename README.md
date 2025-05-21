@@ -41,23 +41,19 @@ dvc remote modify myremote --local gdrive_service_account_json_file_path secrets
 
 The local config doesn't get pushed to GitHub and nor does the `secrets/` folder.
 
-## Training with Docker
+---
 
-### 1. Build the Docker Image
+## Linting (TODO)
 
-```bash
-docker build -t model-trainer .
+For now, there is a non-trivial pylintrc file but it needs to be improved to catch ML Specific code smells (refer Assignment 4 Code Quality excellent section).
+
+You can run pylint right now:
+
+```zsh
+pylint src/
 ```
 
-### 2. Run the Docker Container
-
-```bash
-docker run --rm -v $(pwd):/app \
-  -e DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=/app/secrets/sa_key.json \
-  model-trainer
-```
-
-This will generate trained models and save them in the output/ directory.
+We also need to add more linters like flake8 and Bandit.
 
 ---
 
@@ -78,6 +74,26 @@ pip install -r requirements.txt
 dvc repro
 ```
 
+---
+
+## Training with Docker
+
+### 1. Build the Docker Image
+
+```bash
+docker build -t model-trainer .
+```
+
+### 2. Run the Docker Container
+
+```bash
+docker run --rm -v $(pwd):/app \
+  -e DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=/app/secrets/sa_key.json \
+  model-trainer
+```
+
+This will generate trained models and save them in the output/ directory.
+
 ## Output
 
 After successful training, the following files are saved in the `output/` directory:
@@ -92,7 +108,7 @@ After successful training, the following files are saved in the `output/` direct
 The workflow in `.github/workflows/train.yml`:
 
 - Runs on `push` or `pull_request` to `main`
-- Builds and runs the Docker container
+- Runs the dvc pipeline
 - Uploads the trained models as an artifact
 
 ## Dependencies
