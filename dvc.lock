@@ -36,8 +36,7 @@ stages:
       size: 39718
   train_model:
     cmd: python src/train.py --data data/X.npy --labels data/y.npy --output output/
-      --train_all false --split_output_dir data/split --train_metrics_output metrics/train.json
-      --test_size 0.2 --random_state 45
+      --split_output_dir data/split --train_metrics_output metrics/train.json
     deps:
     - path: data/X.npy
       hash: md5
@@ -49,17 +48,19 @@ stages:
       size: 7328
     - path: params.yaml
       hash: md5
-      md5: bf2ec0faef17ce87c37c874b4d5c32e3
-      size: 62
+      md5: 16ad5c6b145d70c3241cfe48cb52fb10
+      size: 203
     - path: src/train.py
       hash: md5
-      md5: d7fefc4a7aec787a7aea70e331c6d714
-      size: 2800
+      md5: 4eefba6156cede73aceebfe5177f0b8f
+      size: 3016
     params:
       params.yaml:
+        train.priors:
         train.random_state: 45
         train.test_size: 0.2
         train.train_all: false
+        train.var_smoothing: 1e-07
     outs:
     - path: data/split/X_test.npy
       hash: md5
@@ -95,10 +96,10 @@ stages:
       size: 46247
     - path: src/evaluate.py
       hash: md5
-      md5: a58aab7a272a114154cd5dbe5fc07cb5
-      size: 1176
+      md5: bb14df9a001b70142fce8dd351765f82
+      size: 1506
     outs:
     - path: metrics/eval.json
       hash: md5
-      md5: 6e3027b6e1b1aca9f8f5959e926382f3
-      size: 128
+      md5: 4eed0efd48f0dc36e8980a05937774b4
+      size: 228

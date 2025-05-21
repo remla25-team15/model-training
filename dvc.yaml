@@ -14,10 +14,7 @@ stages:
       - data/y.npy
       - output/c1_BoW_Sentiment_Model.pkl
   train_model:
-    cmd: python src/train.py --data data/X.npy --labels data/y.npy --output
-      output/ --train_all ${train.train_all} --split_output_dir data/split
-      --train_metrics_output metrics/train.json --test_size ${train.test_size}
-      --random_state ${train.random_state}
+    cmd: python src/train.py --data data/X.npy --labels data/y.npy --output output/ --split_output_dir data/split --train_metrics_output metrics/train.json
     deps:
       - data/X.npy
       - data/y.npy
@@ -33,6 +30,8 @@ stages:
       - train.train_all
       - train.test_size
       - train.random_state
+      - train.var_smoothing
+      - train.priors
   evaluate:
     cmd:
       python src/evaluate.py --X_test data/split/X_test.npy --y_test data/split/y_test.npy

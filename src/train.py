@@ -12,6 +12,7 @@ import os
 
 import joblib
 import numpy as np
+import yaml
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
@@ -26,9 +27,6 @@ def main():
     parser.add_argument("--labels", type=str, required=True)
     parser.add_argument("--output", type=str, required=True)
     parser.add_argument(
-        "--train_all", type=lambda x: (str(x).lower() == "true"), default=False
-    )
-    parser.add_argument(
         "--split_output_dir", type=str, help="Optional dir to save split test sets"
     )
     parser.add_argument(
@@ -36,18 +34,30 @@ def main():
         type=str,
         help="Optional path to save training metrics JSON",
     )
-    parser.add_argument("--test_size", type=float, default=0.2)
-    parser.add_argument("--random_state", type=int, default=20)
     args = parser.parse_args()
+
+    with open("params.yaml", "r", encoding="utf-8") as f:
+        params = yaml.safe_load(f)
+
+    train_params = params.get("train", {})
+    train_all = train_params.get("train_all", False)
+    test_size = train_params.get("test_size", 0.2)
+    random_state = train_params.get("random_state", 20)
+
+    priors = params.get("priors", None)
+    var_smoothing = params.get("var_smoothing", 1e-9)
 
     X = np.load(args.data)
     y = np.load(args.labels)
 
     os.makedirs(args.output, exist_ok=True)
 
-    model = GaussianNB()
+    model = GaussianNB(
+        var_smoothing=var_smoothing,
+        priors=priors,
+    )
 
-    if args.train_all:
+    if train_all:
         model.fit(X, y)
         if args.train_metrics_output:
             y_pred = model.predict(X)
@@ -58,7 +68,7 @@ def main():
                 json.dump(metrics, f, indent=2)
     else:
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=args.test_size, random_state=args.random_state
+            X, y, test_size=test_size, random_state=random_state
         )
         model.fit(X_train, y_train)
         if args.train_metrics_output:

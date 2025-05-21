@@ -11,7 +11,13 @@ import json
 
 import joblib
 import numpy as np
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    f1_score,
+    precision_score,
+    recall_score,
+)
 
 
 def main():
@@ -32,8 +38,17 @@ def main():
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     cm = confusion_matrix(y_test, y_pred)
+    prec = precision_score(y_test, y_pred, zero_division=0)
+    rec = recall_score(y_test, y_pred, zero_division=0)
+    f1 = f1_score(y_test, y_pred, zero_division=0)
 
-    metrics = {"accuracy": acc, "confusion_matrix": cm.tolist()}
+    metrics = {
+        "accuracy": acc,
+        "precision": prec,
+        "recall": rec,
+        "f1_score": f1,
+        "confusion_matrix": cm.tolist(),
+    }
 
     with open(args.metrics_output, "w", encoding="utf-8") as f:
         json.dump(metrics, f, indent=2)
