@@ -12,16 +12,9 @@ import argparse
 import os
 import pickle
 
-import nltk
 import numpy as np
 import pandas as pd
 from libml import preprocessing as libml
-
-# Download WordNet if needed
-try:
-    nltk.data.find("corpora/wordnet")
-except LookupError:
-    nltk.download("wordnet")
 
 
 def main():

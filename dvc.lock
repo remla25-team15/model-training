@@ -5,16 +5,31 @@ stages:
     deps:
     - path: src/get_data.py
       hash: md5
-      md5: 3d9de33b0c8b027dc20538ced7f74874
-      size: 2159
+      md5: 44a3470236b2132e182b2b1616bb27a6
+      size: 1886
     outs:
     - path: datasets/
       hash: md5
       md5: 706d6ab9d8fddff5a47d00b0f65208b8.dir
       size: 61190
       nfiles: 2
-    - path: nltk_data/
+  preprocess:
+    cmd: python src/prepare_data.py --output_dir data/ --dataset datasets/a1_RestaurantReviews_HistoricDump.tsv
+    deps:
+    - path: src/prepare_data.py
       hash: md5
-      md5: e5492a96d13403f58aae666212b7cdfa.dir
-      size: 10775600
-      nfiles: 1
+      md5: 893f60746adc6d272e04461fdf2fbdc7
+      size: 1140
+    outs:
+    - path: data/X.npy
+      hash: md5
+      md5: f10f362d41996fd6bc87cb2b8780be29
+      size: 10231328
+    - path: data/cv.pkl
+      hash: md5
+      md5: 08415528d68e65db465a6b6cc84155b7
+      size: 39718
+    - path: data/y.npy
+      hash: md5
+      md5: b80a2d74a94a02652bf37dcc4a2bba6d
+      size: 7328

@@ -5,4 +5,11 @@ stages:
       - src/get_data.py
     outs:
       - datasets/
-      - nltk_data/
+  preprocess:
+    cmd: python src/prepare_data.py --output_dir data/ --dataset datasets/a1_RestaurantReviews_HistoricDump.tsv
+    deps:
+      - src/prepare_data.py
+    outs:
+      - data/X.npy
+      - data/cv.pkl
+      - data/y.npy
