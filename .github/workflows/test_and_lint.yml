@@ -4,9 +4,9 @@ on:
   push:
   workflow_dispatch:
 
-
 jobs:
-  test-and-lint:
+  run-tests:
+    name: Run Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements-dev.txt
-        pip install pytest pytest-cov pylint 
 
     - name: Configure DVC
       run: |
@@ -38,11 +37,27 @@ jobs:
       run: |
         pytest --cov=src --cov-report=xml tests/
 
-    - name: Run pylint
-      run: |
-        pylint src/ tests/ --exit-zero  # Always passes but shows warnings
-        # or its possible to fail the build with --fail-under=x (x is the score out of 10)
-        echo "Pylint completed (warnings do not fail the build)"
-
     - name: Upload coverage report
       uses: codecov/codecov-action@v3
+
+  run-linter:
+    name: Run Pylint
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements-dev.txt
+
+    - name: Run pylint
+      run: |
+        pylint src/ tests/ --exit-zero
+        echo "Pylint completed (warnings do not fail the build)"
