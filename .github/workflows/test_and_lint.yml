@@ -33,8 +33,7 @@ jobs:
 
     - name: Run pytest
       run: |
-        pytest --cov=src tests/  
-        pytest --cov-report=xml 
+        pytest --cov=src --cov-report=xml tests/
 
     - name: Run pylint
       run: |
