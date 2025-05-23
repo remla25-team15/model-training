@@ -58,6 +58,7 @@ jobs:
           rclone mkdir 'gdrive_drive:${{ env.GDRIVE_FOLDER_NAME }}/${{ github.ref_name }}/' --drive-shared-with-me
           rclone copy output/c1_BoW_Sentiment_Model.pkl 'gdrive_drive:${{ env.GDRIVE_FOLDER_NAME }}/${{ github.ref_name }}/' --drive-shared-with-me
           rclone copy output/c2_Classifier_Sentiment_Model.pkl 'gdrive_drive:${{ env.GDRIVE_FOLDER_NAME }}/${{ github.ref_name }}/' --drive-shared-with-me
+
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
@@ -67,7 +68,7 @@ jobs:
           draft: false
           prerelease: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REMLA_GITHUB_TOKEN }}
 
       - name: Upload model artifact 1 to release
         uses: actions/upload-release-asset@v1
@@ -77,7 +78,7 @@ jobs:
           asset_name: c1_BoW_Sentiment_Model.pkl
           asset_content_type: application/octet-stream
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REMLA_GITHUB_TOKEN }}
 
       - name: Upload model artifact 2 to release
         uses: actions/upload-release-asset@v1
@@ -87,4 +88,4 @@ jobs:
           asset_name: c2_Classifier_Sentiment_Model.pkl
           asset_content_type: application/octet-stream
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.REMLA_GITHUB_TOKEN }}
