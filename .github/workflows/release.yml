@@ -2,7 +2,9 @@ name: Release Model
 
 on:
   push:
-    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+    # tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+    branches:
+      - setup-release-workflow
 
 env:
   GDRIVE_FOLDER_NAME: Model-releases
@@ -56,3 +58,33 @@ jobs:
           rclone mkdir 'gdrive_drive:${{ env.GDRIVE_FOLDER_NAME }}/${{ github.ref_name }}/' --drive-shared-with-me
           rclone copy output/c1_BoW_Sentiment_Model.pkl 'gdrive_drive:${{ env.GDRIVE_FOLDER_NAME }}/${{ github.ref_name }}/' --drive-shared-with-me
           rclone copy output/c2_Classifier_Sentiment_Model.pkl 'gdrive_drive:${{ env.GDRIVE_FOLDER_NAME }}/${{ github.ref_name }}/' --drive-shared-with-me
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload model artifact 1 to release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: output/c1_BoW_Sentiment_Model.pkl
+          asset_name: c1_BoW_Sentiment_Model.pkl
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload model artifact 2 to release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: output/c2_Classifier_Sentiment_Model.pkl
+          asset_name: c2_Classifier_Sentiment_Model.pkl
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
