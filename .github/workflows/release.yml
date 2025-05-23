@@ -1,0 +1,53 @@
+name: Release Model
+
+on:
+  push:
+    branches:
+      - setup-release-workflow
+  workflow_dispatch:
+
+jobs:
+  release-model:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo at tag
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Write GDrive SA key
+        run: |
+          mkdir -p secrets
+          echo '${{ secrets.GDRIVE_SA_KEY }}' > secrets/sa_key.json
+
+      - name: Set env for DVC
+        run: echo "DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=secrets/sa_key.json" >> $GITHUB_ENV
+
+      - name: Pull DVC data
+        run: dvc pull -v
+
+      - name: Reproduce pipeline
+        run: dvc repro
+
+      - name: Install rclone
+        run: |
+          curl https://rclone.org/install.sh | sudo bash
+
+      - name: Configure rclone
+        run: |
+          echo "${{ secrets.GDRIVE_SA_KEY }}" > gdrive-sa.json
+          rclone config create gdrive_drive drive scope=drive service_account_file=gdrive-sa.json
+
+      - name: Upload both model files to versioned Google Drive folder
+        run: |
+          rclone copy output/c1_BoW_Sentiment_Model.pkl gdrive_drive:Model-Releases/${{ github.ref_name }}/ --create-dirs
+          rclone copy output/c2_Classifier_Sentiment_Model.pkl gdrive_drive:Model-Releases/${{ github.ref_name }}/ --create-dirs
