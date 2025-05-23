@@ -49,5 +49,5 @@ jobs:
 
       - name: Upload both model files to versioned Google Drive folder
         run: |
-          rclone copy output/c1_BoW_Sentiment_Model.pkl gdrive_drive:Model-Releases/${{ github.ref_name }}/ --create-dirs
-          rclone copy output/c2_Classifier_Sentiment_Model.pkl gdrive_drive:Model-Releases/${{ github.ref_name }}/ --create-dirs
+          rclone copy output/c1_BoW_Sentiment_Model.pkl gdrive_drive:Model-Releases/${{ github.ref_name }}/
+          rclone copy output/c2_Classifier_Sentiment_Model.pkl gdrive_drive:Model-Releases/${{ github.ref_name }}/
