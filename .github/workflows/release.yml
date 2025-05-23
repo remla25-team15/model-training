@@ -2,10 +2,7 @@ name: Release Model
 
 on:
   push:
-    # tags: ["v[0-9]+.[0-9]+.[0-9]+"]
-    branches:
-      - setup-release-workflow
-  workflow_dispatch:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
 
 env:
   GDRIVE_FOLDER_NAME: Model-releases
