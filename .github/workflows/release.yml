@@ -44,7 +44,7 @@ jobs:
 
       - name: Configure rclone
         run: |
-          echo "${{ secrets.GDRIVE_SA_KEY }}" > gdrive-sa.json
+          echo '${{ secrets.GDRIVE_SA_KEY }}' > gdrive-sa.json
           rclone config create gdrive_drive drive scope=drive service_account_file=gdrive-sa.json
 
       - name: Upload both model files to versioned Google Drive folder
