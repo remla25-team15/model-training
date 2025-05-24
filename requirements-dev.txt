@@ -8,3 +8,5 @@ pre-commit
 mypy
 ipython
 pytest
+flake8
+bandit

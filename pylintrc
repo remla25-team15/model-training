@@ -648,3 +648,7 @@ init-import=no
 # List of qualified module names which can have objects that can redefine
 # builtins.
 redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io
+
+
+[MASTER]
+load-plugins=src.linting.ml_code_smell_checker
