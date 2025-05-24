@@ -14,3 +14,5 @@ numpy
 scikit-learn
 radon
 memory_profiler
+flake8
+bandit
