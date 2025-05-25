@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 from typing import Dict
 
+
 class ReadmeUpdater:
     """Updates README.md with automated badges and metrics."""
 
@@ -64,7 +65,9 @@ class ReadmeUpdater:
         if 'pylint_score' in metrics and 'coverage' in metrics:
             quality_score = (metrics['pylint_score'] * 10 + metrics['coverage']) / 2
             color = self.get_color_for_score(quality_score)
-            badges.append(self.create_badge("Code%20Quality", f"{quality_score:.1f}%25", color))
+            badges.append(
+                self.create_badge("Code%20Quality", f"{quality_score:.1f}%25", color)
+            )
         # Test Status Badge
         if 'tests_passed' in metrics and 'total_tests' in metrics:
             passed = metrics['tests_passed']
@@ -132,6 +135,7 @@ class ReadmeUpdater:
         summary += "\n*Last updated: Automatically by GitHub Actions*\n"
         return summary
 
+
 def load_metrics() -> Dict:
     """Load metrics from various sources."""
     metrics = {}
@@ -172,6 +176,7 @@ def load_metrics() -> Dict:
             print(f"⚠️ Error loading pylint score: {e}")
     return metrics
 
+
 def main():
     """Main function."""
     readme_path = Path('README.md')
@@ -187,7 +192,7 @@ def main():
     if updater.update_readme(metrics):
         print(f"✅ README updated successfully with {len(metrics)} metrics")
         # Print summary of what was updated
-        print(f"\n📊 Updated metrics:")
+        print("\n📊 Updated metrics:")
         for key, value in metrics.items():
             if isinstance(value, float):
                 if 'score' in key:
@@ -200,6 +205,7 @@ def main():
     else:
         print("❌ Failed to update README")
         return 1
+
 
 if __name__ == "__main__":
     sys.exit(main())
