@@ -133,9 +133,9 @@ class ReadmeUpdater:
         if 'metamorphic_score' in metrics:
             summary += f"- **Metamorphic Testing**: {metrics['metamorphic_score']:.1f}%\n"
         if 'pylint_score' in metrics:
-            summary += f"- **Code Quality (Pylint)**: {metrics['pylint_score']:.2f}/10\n"
+            summary += f"-**Code Quality (Pylint)**: {metrics['pylint_score']:.2f}/10\n"
         if 'tests_passed' in metrics and 'total_tests' in metrics:
-            summary += f"- **Test Results**: {metrics['tests_passed']}/{metrics['total_tests']} passed\n"
+            summary += f"-**Results**: {metrics['tests_passed']}/{metrics['total_tests']} passed\n"
         summary += "\n*Last updated: Automatically by GitHub Actions*\n"
         return summary
 
