@@ -29,6 +29,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install -r requirements.txt
           pip install -r requirements-dev.txt
 
       - name: Create necessary directories
@@ -36,6 +37,27 @@ jobs:
           mkdir -p secrets
           mkdir -p coverage_reports
           mkdir -p test_reports
+
+      - name: Write GDrive SA key (if available)
+        run: |
+          echo '${{ secrets.GDRIVE_SA_KEY }}' > secrets/sa_key.json
+
+      - name: Set env for DVC (if SA key available)
+        run: echo "DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=secrets/sa_key.json" >> $GITHUB_ENV
+
+      - name: Download NLTK data
+        run: |
+          python -c "import nltk; nltk.download('punkt'); nltk.download('wordnet')"
+
+      - name: Pull DVC data (if SA key available)
+        run: |
+          dvc pull -v || echo "DVC pull failed, continuing without remote data"
+        continue-on-error: true
+
+      - name: Run DVC pipeline (if SA key available)
+        run: |
+          dvc repro || echo "DVC repro failed, continuing with existing models"
+        continue-on-error: true
 
       - name: Run pylint with human-readable output
         run: |
