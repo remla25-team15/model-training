@@ -1,6 +1,10 @@
 # Restaurant Sentiment Analysis – Model Training
 
 <!-- AUTOMATED-BADGES -->
+![Test%20Coverage](https://img.shields.io/badge/Test%20Coverage-64.9%25-yellow)
+![ML%20Test%20Score](https://img.shields.io/badge/ML%20Test%20Score-87.5/100-brightgreen)
+![Metamorphic%20Tests](https://img.shields.io/badge/Metamorphic%20Tests-100.0%25-brightgreen)
+![Tests](https://img.shields.io/badge/Tests-18/18%20passed-brightgreen)
 <!-- END-AUTOMATED-BADGES -->
 
 This repository contains the code to train a sentiment analysis model on restaurant reviews using a machine learning pipeline.

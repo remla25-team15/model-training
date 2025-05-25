@@ -1,0 +1,61 @@
+{
+  "overall_score": 87.5,
+  "metamorphic_score": 100.0,
+  "total_tests": 18,
+  "passed_tests": 18,
+  "failed_tests": 0,
+  "skipped_tests": 1,
+  "category_breakdown": {
+    "data": {
+      "name": "Feature and Data Integrity",
+      "weight": 30,
+      "total_tests": 11,
+      "passed_tests": 11,
+      "failed_tests": 0,
+      "score": 100.0
+    },
+    "model": {
+      "name": "Model Development",
+      "weight": 25,
+      "total_tests": 2,
+      "passed_tests": 1,
+      "failed_tests": 1,
+      "score": 50.0
+    },
+    "infra": {
+      "name": "ML Infrastructure",
+      "weight": 20,
+      "total_tests": 1,
+      "passed_tests": 1,
+      "failed_tests": 0,
+      "score": 100.0
+    },
+    "monitor": {
+      "name": "Monitoring",
+      "weight": 15,
+      "total_tests": 3,
+      "passed_tests": 3,
+      "failed_tests": 0,
+      "score": 100.0
+    },
+    "metamorphic": {
+      "name": "Metamorphic Testing",
+      "weight": 10,
+      "total_tests": 1,
+      "passed_tests": 1,
+      "failed_tests": 0,
+      "score": 100.0
+    }
+  },
+  "recommendations": [
+    "\u274c Model Development score is low (50.0%). Review and fix failing tests."
+  ],
+  "methodology": "ML Test Score based on Google's methodology",
+  "categories": {
+    "data": 100.0,
+    "model": 50.0,
+    "infra": 100.0,
+    "monitor": 100.0,
+    "metamorphic": 100.0
+  }
+}
