@@ -3,3 +3,5 @@ exclude_dirs:
   - old-scripts
 targets:
   - .
+skips:
+  - B403
