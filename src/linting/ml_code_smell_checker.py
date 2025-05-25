@@ -1,33 +1,26 @@
-from pylint.checkers import BaseChecker
+import gdown
+import joblib
+import pandas as pd
+from libml import preprocessing as libml
 
-class MLCodeSmellChecker(BaseChecker):
-    name = "ml-code-smell"
-    msgs = {
-        "C9001": (
-            "Hardcoded hyperparameter detected: %s",
-            "hardcoded-hyperparameter",
-            "Avoid hardcoding hyperparameters; use configuration files or constants.",
-        ),
-        "C9002": (
-            "Missing random seed for reproducibility",
-            "missing-random-seed",
-            "Set a random seed to ensure reproducibility in ML experiments.",
-        ),
-    }
+url = "https://drive.google.com/file/d/1CJ1RQs7LSf1izuE-qPfyAZlLUd7K946U/view?usp=sharing"
 
-    def visit_call(self, node):
-        # Detect hardcoded learning rate
-        if (
-            node.func.as_string() in ["sklearn.linear_model.SGDClassifier", "torch.optim.SGD"]
-            and "lr" in [kw.arg for kw in node.keywords]
-        ):
-            self.add_message("hardcoded-hyperparameter", node=node, args=("learning rate",))
+downloaded_file = gdown.download(url, "downloaded_model.pkl", quiet=False, fuzzy=True)
+print(f"Downloaded file: {downloaded_file}")
 
-        # Detect missing random seed
-        if node.func.as_string() in ["random.seed", "numpy.random.seed", "torch.manual_seed"]:
-            return
-        if node.func.as_string() in ["sklearn.model_selection.train_test_split"]:
-            self.add_message("missing-random-seed", node=node)
+with open("../output/downloaded_model.pkl", "rb") as f:
+    head = f.read(100)
+    print(head[:100])
 
-def register(linter):
-    linter.register_checker(MLCodeSmellChecker(linter))
+model = joblib.load("../output/downloaded_model.pkl")
+messages = pd.read_csv(
+    "../datasets/a1_RestaurantReviews_HistoricDump.tsv",
+    delimiter='\t',
+    quoting=3
+)
+X = libml._preprocess(messages).toarray()
+example_input = X[0]  # Use the first example from the dataset
+print(f"Example input: {example_input}")
+
+prediction = model.predict(example_input.reshape(1, -1))
+print(f"Prediction: {prediction}")
