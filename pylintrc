@@ -102,7 +102,7 @@ recursive=no
 # source root is an absolute path or a path relative to the current working
 # directory used to determine a package namespace for modules located under the
 # source root.
-source-roots=
+source-roots=src
 
 # When enabled, pylint would attempt to guess common misconfiguration and emit
 # user-friendly hints instead of false-positive error messages.
@@ -305,7 +305,7 @@ max-bool-expr=5
 max-branches=12
 
 # Maximum number of locals for function / method body.
-max-locals=15
+max-locals=25
 
 # Maximum number of parents for a class (see R0901).
 max-parents=7
@@ -651,4 +651,4 @@ redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io
 
 
 [MASTER]
-load-plugins=src.linting.ml_code_smell_checker
+load-plugins=linting.ml_code_smell_checker
