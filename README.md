@@ -1,5 +1,8 @@
 # Restaurant Sentiment Analysis – Model Training
 
+<!-- AUTOMATED-BADGES -->
+<!-- END-AUTOMATED-BADGES -->
+
 This repository contains the code to train a sentiment analysis model on restaurant reviews using a machine learning pipeline.
 It includes Docker support for reproducibility and a GitHub Actions workflow to automate training and artifact generation.
 
