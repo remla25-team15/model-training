@@ -3,7 +3,7 @@
 '''
 import numpy as np
 from scipy.stats import wilcoxon
-from sklearn.metrics import accuracy_score
+from src.evaluate import evaluate_model
 MIN_SLICE_ACCURACY = 0.80
 
 
@@ -24,8 +24,8 @@ def test_negative_keywords(trained_model, test_data):
     y_slice = y[negative_reviews]
 
     if len(X_slice) > 0:
-        y_pred = trained_model.predict(X_slice)
-        acc = accuracy_score(y_slice, y_pred)
+        metrics = evaluate_model(trained_model, X_slice, y_slice)
+        acc = metrics["accuracy"]
         print(f"Negative review accuracy: {acc:.2f}")
         assert acc >= MIN_SLICE_ACCURACY, (
             f"Negative review accuracy ({acc:.2f}) below threshold\n"
@@ -50,8 +50,8 @@ def test_robustness(trained_model, test_data, slice_size=100, repetitions=5, alp
         X_slice = X[indices]
         y_slice = y[indices]
 
-        y_pred = trained_model.predict(X_slice)
-        acc = accuracy_score(y_slice, y_pred)
+        metrics = evaluate_model(trained_model, X_slice, y_slice)
+        acc = metrics["accuracy"]
         slice_accuracies.append(acc)
 
     differences = np.diff(slice_accuracies)

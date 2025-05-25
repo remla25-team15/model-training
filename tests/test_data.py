@@ -11,8 +11,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 import yaml
 
-from src.evaluate import parse_args
-from src.train import fit_naive_bayes, load_params
+from src.evaluate import parse_args, evaluate_model
+from src.train import fit_naive_bayes, load_params, train_model, save_json
 
 MIN_ROWS = 100
 MAX_TEXT_LENGTH = 1000
@@ -90,7 +90,8 @@ def test_feature_cost():
     )
 
     baseline_model = fit_naive_bayes(X_train, y_train, config)
-    baseline_acc = accuracy_score(y_test, baseline_model.predict(X_test))
+    baseline_metrics = evaluate_model(baseline_model, X_test, y_test)
+    baseline_acc = baseline_metrics["accuracy"]
 
     feature_costs = {}
     n_features = X.shape[1]
@@ -105,7 +106,8 @@ def test_feature_cost():
         )
 
         model_i = fit_naive_bayes(X_train_i, y_train_i, config)
-        acc_i = accuracy_score(y_test_i, model_i.predict(X_test_i))
+        metrics_i = evaluate_model(model_i, X_test_i, y_test_i)
+        acc_i = metrics_i["accuracy"]
         feature_costs[i] = baseline_acc - acc_i
 
     # Select top 10 most impactful features (by absolute difference)
@@ -115,8 +117,7 @@ def test_feature_cost():
 
     # Save results
     os.makedirs(os.path.dirname(args.metrics_output), exist_ok=True)
-    with open(args.metrics_output, "w", encoding="utf-8") as f:
-        json.dump(top_feature_costs, f, indent=2)
+    save_json(args.metrics_output, top_feature_costs)
 
     max_cost = max(abs(v) for v in feature_costs.values())
     assert max_cost < 0.10, (

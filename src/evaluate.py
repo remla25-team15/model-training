@@ -49,8 +49,18 @@ def evaluate_model(model, X_test, y_test):
 
 def save_metrics(metrics, output_path):
     """Save metrics dictionary as a JSON file."""
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(metrics, f, indent=2)
+    return output_path
+
+
+def run_evaluation(X_path, y_path, model_path, metrics_output_path):
+    X_test, y_test = load_data(X_path, y_path)
+    model = load_model(model_path)
+    metrics = evaluate_model(model, X_test, y_test)
+    save_metrics(metrics, metrics_output_path)
+    return metrics
 
 
 def parse_args():
@@ -73,10 +83,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    X_test, y_test = load_data(args.X_test, args.y_test)
-    model = load_model(args.model)
-    metrics = evaluate_model(model, X_test, y_test)
-    save_metrics(metrics, args.metrics_output)
+    metrics = run_evaluation(args.X_test, args.y_test, args.model, args.metrics_output)
     print("Evaluation complete. Accuracy:", metrics["accuracy"])
 
 

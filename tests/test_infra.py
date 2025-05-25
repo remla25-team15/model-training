@@ -1,4 +1,4 @@
-from sklearn.metrics import accuracy_score
+from src.evaluate import evaluate_model
 # Choose an appropriate threshold for the model
 MIN_ACCURACY = 0.6
 
@@ -9,15 +9,13 @@ def test_model_serving_validation(trained_model, test_data):
     Compares against both absolute and relative thresholds
     """
     X, y = test_data["X"], test_data["y"]
-
-    # Get predictions
-    y_pred = trained_model.predict(X)
-    val_accuracy = accuracy_score(y, y_pred)
+    metrics = evaluate_model(trained_model, X, y)
+    val_accuracy = metrics["accuracy"]
 
     # Absolute quality check
     assert val_accuracy >= MIN_ACCURACY, (
         f"Model accuracy {val_accuracy:.2f} below serving threshold {MIN_ACCURACY}\n"
-        f"Failing samples:\n{X[y_pred != y][:3]}"
+        f"Failing samples:\n{X[trained_model.predict(X) != y][:3]}"
     )
 
     # Relative check vs previous version
