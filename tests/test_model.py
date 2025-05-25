@@ -67,4 +67,8 @@ def test_robustness(trained_model, test_data, slice_size=100, repetitions=5, alp
     else:
         print(f"Statistically significant difference detected in slice performance (p = {p_value:.4f})")
 
+    assert is_robust, (
+        f"Model is not robust: statistically significant difference in performance across slices (p = {p_value:.4f})"
+    )
+
     return is_robust, slice_accuracies

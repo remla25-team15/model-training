@@ -94,6 +94,11 @@ You can also run the tests with coverage:
 pytest --cov=src tests/
 ```
 
+Check cyclomatic complexity
+```bash
+radon cc src/ -s -a
+```
+
 --
 
 ## Training

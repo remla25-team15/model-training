@@ -118,4 +118,9 @@ def test_feature_cost():
     with open(args.metrics_output, "w", encoding="utf-8") as f:
         json.dump(top_feature_costs, f, indent=2)
 
+    max_cost = max(abs(v) for v in feature_costs.values())
+    assert max_cost < 0.10, (
+        f"Removing a single feature caused accuracy to drop by more than 10% (max drop: {max_cost:.3f})"
+    )
+
     return top_feature_costs
