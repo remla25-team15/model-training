@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - fix-linter-setuo
   pull_request:
     branches:
       - main
@@ -30,3 +31,4 @@ jobs:
 
       - name: Run Bandit
         run: bandit -r . -c bandit.yaml
+
