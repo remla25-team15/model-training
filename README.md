@@ -116,6 +116,46 @@ We also need to add more linters like flake8 and Bandit.
 
 ---
 
+## Testing
+There are some tests in the `tests/` directory following the ML Test Score methodology.
+You can run the tests using:
+
+```bash
+pytest tests/
+```
+You can also run the tests with coverage:
+
+```bash
+pytest --cov=src tests/
+```
+
+Check cyclomatic complexity
+```bash
+radon cc src/ -s -a
+```
+
+--
+
+## Testing
+There are some tests in the `tests/` directory following the ML Test Score methodology.
+You can run the tests using:
+
+```bash
+pytest tests/
+```
+You can also run the tests with coverage:
+
+```bash
+pytest --cov=src tests/
+```
+
+Check cyclomatic complexity
+```bash
+radon cc src/ -s -a
+```
+
+--
+
 # Training
 
 Before proceeding with training, please make sure you have the API key in the correct location, i.e. `secrets/sa_key.json`.
