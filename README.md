@@ -118,6 +118,7 @@ We also need to add more linters like flake8 and Bandit.
 
 # Training
 
+Before proceeding with training, please make sure you have the API key in the correct location, i.e. `secrets/sa_key.json`.
 You can either run the training locally or using a docker container. Skip to [Training with docker](#training-with-docker) to do it in docker.
 
 ## Training Locally
@@ -229,9 +230,7 @@ docker run --rm -v $(pwd):/app \
 To run the pipeline inside the container:
 
 ```bash
-docker run --rm -v $(pwd):/app \
-  -e DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=/app/secrets/sa_key.json \
-  model-trainer dvc repro
+docker run --rm -v $(pwd):/app model-trainer dvc repro
 ```
 
 This will generate trained models and save them in the output/ directory.
@@ -241,23 +240,19 @@ This will generate trained models and save them in the output/ directory.
 You can also run DVC experiments inside the Docker container:
 
 ```bash
-docker run --rm -v $(pwd):/app \
-  -e DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=/app/secrets/sa_key.json \
-  model-trainer dvc exp run
+docker run --rm -v $(pwd):/app model-trainer dvc exp run
 ```
 
 To view experiment results:
 
 ```bash
-docker run --rm -v $(pwd):/app \
-  model-trainer dvc exp show
+docker run --rm -v $(pwd):/app model-trainer dvc exp show
 ```
 
 To run with updated parameters:
 
 ```bash
-docker run --rm -v $(pwd):/app \
-  model-trainer dvc exp run -S train.random_state=45
+docker run --rm -v $(pwd):/app model-trainer dvc exp run -S train.random_state=45
 ```
 
 ## Pushing to DVC Remote with Docker
@@ -265,9 +260,7 @@ docker run --rm -v $(pwd):/app \
 After generating or modifying outputs, push to your remote DVC storage:
 
 ```bash
-docker run --rm -v $(pwd):/app \
-  -e DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=/app/secrets/sa_key.json \
-  model-trainer dvc push
+docker run --rm -v $(pwd):/app model-trainer dvc push
 ```
 
 ## Output
