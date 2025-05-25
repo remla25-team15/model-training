@@ -1,5 +1,12 @@
 # Restaurant Sentiment Analysis – Model Training
 
+<!-- AUTOMATED-BADGES -->
+![Test%20Coverage](https://img.shields.io/badge/Test%20Coverage-64.9%25-yellow)
+![ML%20Test%20Score](https://img.shields.io/badge/ML%20Test%20Score-87.5/100-brightgreen)
+![Metamorphic%20Tests](https://img.shields.io/badge/Metamorphic%20Tests-100.0%25-brightgreen)
+![Tests](https://img.shields.io/badge/Tests-18/18%20passed-brightgreen)
+<!-- END-AUTOMATED-BADGES -->
+
 This repository contains the code to train a sentiment analysis model on restaurant reviews using a machine learning pipeline.
 It includes Docker support for reproducibility and a GitHub Actions workflow to automate training and artifact generation.
 
@@ -115,6 +122,46 @@ pylint src/
 We also need to add more linters like flake8 and Bandit.
 
 ---
+
+## Testing
+There are some tests in the `tests/` directory following the ML Test Score methodology.
+You can run the tests using:
+
+```bash
+pytest tests/
+```
+You can also run the tests with coverage:
+
+```bash
+pytest --cov=src tests/
+```
+
+Check cyclomatic complexity
+```bash
+radon cc src/ -s -a
+```
+
+--
+
+## Testing
+There are some tests in the `tests/` directory following the ML Test Score methodology.
+You can run the tests using:
+
+```bash
+pytest tests/
+```
+You can also run the tests with coverage:
+
+```bash
+pytest --cov=src tests/
+```
+
+Check cyclomatic complexity
+```bash
+radon cc src/ -s -a
+```
+
+--
 
 # Training
 

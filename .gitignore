@@ -1,5 +1,6 @@
 # Ignore Python virtual environment
 venv/
+.venv/
 *.pyc
 __pycache__/
 *.pyo
@@ -26,3 +27,6 @@ secrets/
 *.gz
 *.whl
 datasets/
+/datasets
+/.coverage.Aimans-MacBook-Pro.local.6184.XlGGyDqx
+/metrics/feature_costs.json
