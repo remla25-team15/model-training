@@ -3,6 +3,8 @@ name: Release Model
 on:
   push:
     tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+    branches:
+        - [YOUR-BRANCH-NAME]
 
 env:
   GDRIVE_FOLDER_NAME: Model-releases
