@@ -38,12 +38,12 @@ jobs:
           mkdir -p test_reports
 
       - name: Write GDrive SA key (if available)
-        if: ${{ secrets.GDRIVE_SA_KEY }}
+        if: secrets.GDRIVE_SA_KEY
         run: |
           echo '${{ secrets.GDRIVE_SA_KEY }}' > secrets/sa_key.json
 
       - name: Set env for DVC (if SA key available)
-        if: ${{ secrets.GDRIVE_SA_KEY }}
+        if: secrets.GDRIVE_SA_KEY
         run: echo "DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=secrets/sa_key.json" >> $GITHUB_ENV
 
       - name: Download NLTK data
@@ -51,13 +51,13 @@ jobs:
           python -c "import nltk; nltk.download('punkt'); nltk.download('wordnet')"
 
       - name: Pull DVC data (if SA key available)
-        if: ${{ secrets.GDRIVE_SA_KEY }}
+        if: secrets.GDRIVE_SA_KEY
         run: |
           dvc pull -v || echo "DVC pull failed, continuing without remote data"
         continue-on-error: true
 
       - name: Run DVC pipeline (if SA key available)
-        if: ${{ secrets.GDRIVE_SA_KEY }}
+        if: secrets.GDRIVE_SA_KEY
         run: |
           dvc repro || echo "DVC repro failed, continuing with existing models"
         continue-on-error: true
