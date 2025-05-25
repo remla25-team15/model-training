@@ -230,8 +230,8 @@ class MLTestScoreCalculator:
         return recommendations
 
     def save_results(self, output_path: Path, test_results: dict,
-                    category_stats: dict, overall_score: float,
-                    metamorphic_score: float, recommendations: list) -> None:
+                     category_stats: dict, overall_score: float,
+                     metamorphic_score: float, recommendations: list) -> None:
         """Save ML Test Score results to JSON."""
 
         results = {
@@ -338,3 +338,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
