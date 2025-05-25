@@ -1,4 +1,4 @@
 [flake8]
 max-line-length = 100
-exclude = .git,__pycache__,venv,old-scripts,src/old-scripts
+exclude = .git,__pycache__,venv,old-scripts,tests
 ignore = E203, W503

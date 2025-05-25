@@ -32,6 +32,7 @@ def parse_args():
     parser.add_argument("--bow_dir", type=str, required=True)
     return parser.parse_args()
 
+
 def preprocess_and_save(dataset_path, output_dir, bow_dir):
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs(bow_dir, exist_ok=True)
@@ -46,6 +47,7 @@ def preprocess_and_save(dataset_path, output_dir, bow_dir):
     with open(os.path.join(bow_dir, "c1_BoW_Sentiment_Model.pkl"), "wb") as f:
         pickle.dump(cv, f)
     return X, y
+
 
 def main():
     args = parse_args()

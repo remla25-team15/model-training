@@ -5,26 +5,16 @@ Training script for sentiment classifier using Gaussian Naive Bayes.
 - Either trains on the full dataset or performs a train/test split.
 - Saves the trained model and optionally the test set for evaluation.
 """
-"""
-Training script for sentiment classifier using Gaussian Naive Bayes.
-
-- Loads preprocessed data (X and y).
-- Either trains on the full dataset or performs a train/test split.
-- Saves the trained model and optionally the test set for evaluation.
-"""
 
 import argparse
 import json
 import os
-
 import joblib
 import numpy as np
 import yaml
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
-
-
 
 
 def parse_args():
