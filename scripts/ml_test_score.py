@@ -4,7 +4,7 @@ ML Test Score Calculator
 
 Analyzes pytest results and calculates an ML Test Score based on:
 - Feature and Data Integrity tests
-- Model Development tests  
+- Model Development tests
 - ML Infrastructure tests
 - Monitoring tests
 - Metamorphic tests
@@ -302,7 +302,7 @@ def main():
         )
 
         # Print summary
-        print(f"\n📈 ML Test Score Results:")
+        print("\n📈 ML Test Score Results:")
         print(f"Overall Score: {overall_score:.1f}/100")
         print(f"Metamorphic Testing Score: {metamorphic_score:.1f}/100")
         print(f"Total Tests: {test_results['total_tests']}")
@@ -310,13 +310,15 @@ def main():
         print(f"Failed: {test_results['failures'] + test_results['errors']}")
         print(f"Skipped: {test_results['skipped']}")
 
-        print(f"\n📋 Category Breakdown:")
+        print("\n📋 Category Breakdown:")
         for category, config in calculator.test_categories.items():
             stats = category_stats[category]
-            print(f"  {config['description']}: {stats['score']:.1f}% "
-                  f"({stats['passed']}/{stats['total']} tests)")
+            print(
+                f"  {config['description']}: {stats['score']:.1f}% "
+                f"({stats['passed']}/{stats['total']} tests)"
+            )
 
-        print(f"\n💡 Recommendations:")
+        print("\n💡 Recommendations:")
         for rec in recommendations:
             print(f"  {rec}")
 
@@ -336,4 +338,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
