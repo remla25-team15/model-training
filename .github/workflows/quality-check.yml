@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - [main, test-in-workflow]
+      - test-in-workflow
   workflow_dispatch:
 
 env:
