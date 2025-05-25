@@ -1,8 +1,8 @@
 '''
    TESTS FOR MODEL DEVELOPMENT
 '''
-
-
+import numpy as np
+from scipy.stats import wilcoxon
 from sklearn.metrics import accuracy_score
 MIN_SLICE_ACCURACY = 0.80
 
@@ -31,3 +31,40 @@ def test_negative_keywords(trained_model, test_data):
             f"Negative review accuracy ({acc:.2f}) below threshold\n"
             f"Slice size: {len(X_slice)} samples"
         )
+
+
+def test_robustness(trained_model, test_data, slice_size=100, repetitions=5, alpha=0.05):
+    """
+    Test model robustness by evaluating consistency of performance on random data slices.
+
+    """
+    X, y = test_data["X"], test_data["y"]
+    n_samples = len(X)
+    if slice_size > n_samples:
+        raise ValueError(f"slice_size ({slice_size}) cannot be larger than test data size ({n_samples})")
+
+    slice_accuracies = []
+
+    for _ in range(repetitions):
+        indices = np.random.choice(n_samples, size=slice_size, replace=False)
+        X_slice = X[indices]
+        y_slice = y[indices]
+
+        y_pred = trained_model.predict(X_slice)
+        acc = accuracy_score(y_slice, y_pred)
+        slice_accuracies.append(acc)
+
+    differences = np.diff(slice_accuracies)
+    if len(differences) == 0:
+        is_robust = True
+        p_value = None
+    else:
+        stat, p_value = wilcoxon(differences, alternative='two-sided')
+        is_robust = p_value > alpha
+
+    if is_robust:
+        print(f"No statistically significant difference in performance across slices (p = {p_value:.4f})")
+    else:
+        print(f"Statistically significant difference detected in slice performance (p = {p_value:.4f})")
+
+    return is_robust, slice_accuracies

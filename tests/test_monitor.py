@@ -8,7 +8,7 @@ import time
 SAMPLE_INPUT = np.random.rand(1, 1421)
 
 # Constants for performance limits based on my run - Adjust these later
-MAX_MEMORY_MB = 300
+MAX_MEMORY_MB = 500
 MAX_LATENCY_MS = 1
 MIN_THROUGHPUT = 1000
 

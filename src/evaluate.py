@@ -8,6 +8,8 @@ Evaluation script for a trained sentiment classifier.
 
 import argparse
 import json
+import os
+import sys
 
 import joblib
 import numpy as np
@@ -20,40 +22,62 @@ from sklearn.metrics import (
 )
 
 
-def main():
-    """
-    Main function for model evaluation.
-    """
+def load_data(X_path, y_path):
+    """Load test features and labels."""
+    X_test = np.load(X_path)
+    y_test = np.load(y_path)
+    return X_test, y_test
+
+
+def load_model(model_path):
+    """Load trained model from disk."""
+    return joblib.load(model_path)
+
+
+def evaluate_model(model, X_test, y_test):
+    """Predict and compute evaluation metrics."""
+    y_pred = model.predict(X_test)
+    metrics = {
+        "accuracy": accuracy_score(y_test, y_pred),
+        "precision": precision_score(y_test, y_pred, zero_division=0),
+        "recall": recall_score(y_test, y_pred, zero_division=0),
+        "f1_score": f1_score(y_test, y_pred, zero_division=0),
+        "confusion_matrix": confusion_matrix(y_test, y_pred).tolist(),
+    }
+    return metrics
+
+
+def save_metrics(metrics, output_path):
+    """Save metrics dictionary as a JSON file."""
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(metrics, f, indent=2)
+
+
+def parse_args():
+    # Avoid parsing args when run inside pytest
+    if "PYTEST_CURRENT_TEST" in os.environ:
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        return argparse.Namespace(
+            X_test=os.path.join(base_dir, "data", "X.npy"),
+            y_test=os.path.join(base_dir, "data", "y.npy"),
+            model=os.path.join(base_dir, "models", "model.pkl"),
+            metrics_output=os.path.join(base_dir, "metrics", "feature_costs.json")
+        )
     parser = argparse.ArgumentParser()
     parser.add_argument("--X_test", type=str, required=True)
     parser.add_argument("--y_test", type=str, required=True)
     parser.add_argument("--model", type=str, required=True)
     parser.add_argument("--metrics_output", type=str, required=True)
-    args = parser.parse_args()
 
-    X_test = np.load(args.X_test)
-    y_test = np.load(args.y_test)
-    model = joblib.load(args.model)
+    return parser.parse_args()
 
-    y_pred = model.predict(X_test)
-    acc = accuracy_score(y_test, y_pred)
-    cm = confusion_matrix(y_test, y_pred)
-    prec = precision_score(y_test, y_pred, zero_division=0)
-    rec = recall_score(y_test, y_pred, zero_division=0)
-    f1 = f1_score(y_test, y_pred, zero_division=0)
-
-    metrics = {
-        "accuracy": acc,
-        "precision": prec,
-        "recall": rec,
-        "f1_score": f1,
-        "confusion_matrix": cm.tolist(),
-    }
-
-    with open(args.metrics_output, "w", encoding="utf-8") as f:
-        json.dump(metrics, f, indent=2)
-
-    print("Evaluation complete. Accuracy:", acc)
+def main():
+    args = parse_args()
+    X_test, y_test = load_data(args.X_test, args.y_test)
+    model = load_model(args.model)
+    metrics = evaluate_model(model, X_test, y_test)
+    save_metrics(metrics, args.metrics_output)
+    print("Evaluation complete. Accuracy:", metrics["accuracy"])
 
 
 if __name__ == "__main__":
