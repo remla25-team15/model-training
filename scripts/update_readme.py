@@ -66,7 +66,11 @@ class ReadmeUpdater:
             quality_score = (metrics['pylint_score'] * 10 + metrics['coverage']) / 2
             color = self.get_color_for_score(quality_score)
             badges.append(
-                self.create_badge("Code%20Quality", f"{quality_score:.1f}%25", color)
+                self.create_badge(
+                    "Code%20Quality",
+                    f"{quality_score:.1f}%25",
+                    color
+                )
             )
         # Test Status Badge
         if 'tests_passed' in metrics and 'total_tests' in metrics:
