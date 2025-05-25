@@ -68,9 +68,9 @@ def parse_args():
     if "PYTEST_CURRENT_TEST" in os.environ:
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         return argparse.Namespace(
-            X_test=os.path.join(base_dir, "data", "X.npy"),
-            y_test=os.path.join(base_dir, "data", "y.npy"),
-            model=os.path.join(base_dir, "models", "model.pkl"),
+            X_test=os.path.join(base_dir, "data", "split", "X_test.npy"),
+            y_test=os.path.join(base_dir, "data", "split", "y_test.npy"),
+            model=os.path.join(base_dir, "output", "c2_Classifier_Sentiment_Model.pkl"),
             metrics_output=os.path.join(base_dir, "metrics", "feature_costs.json")
         )
     parser = argparse.ArgumentParser()

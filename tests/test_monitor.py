@@ -49,15 +49,14 @@ def test_throughput(trained_model):
     """
     n_runs = 1000
     start_time = time.perf_counter()
-
+    
     for _ in range(n_runs):
         trained_model.predict(SAMPLE_INPUT)
-
-    total_time = time.perf_counter() - start_time
-    throughput = n_runs / total_time
-    print(f"Throughput: {throughput:.1f} predictions/sec")
+    
+    elapsed_time = time.perf_counter() - start_time
+    throughput = n_runs / elapsed_time
+    print(f"Throughput: {throughput:.1f} predictions/second")
 
     assert throughput >= MIN_THROUGHPUT, (
-        f"Throughput {throughput:.1f} predictions/sec "
-        f"below {MIN_THROUGHPUT} minimum"
+        f"Throughput {throughput:.1f} predictions/sec is below minimum {MIN_THROUGHPUT}"
     )

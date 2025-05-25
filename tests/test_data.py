@@ -49,6 +49,30 @@ def test_feature_schema(real_data):
     }
 
     for col, rules in schema.items():
+        assert col in real_data.columns, f"Missing column: {col}"
+        
+        # Check data types
+        if rules["type"] == str:
+            assert real_data[col].dtype == 'object', f"Column {col} should be string type"
+        elif rules["type"] == int:
+            assert real_data[col].dtype in ['int64', 'int32', 'int'], f"Column {col} should be integer type"
+        
+        # Check for null values
+        if not rules.get("null_allowed", True):
+            assert not real_data[col].isnull().any(), f"Column {col} contains null values"
+        
+        # Check allowed values
+        if "allowed_values" in rules:
+            unique_values = set(real_data[col].unique())
+            allowed_values = set(rules["allowed_values"])
+            assert unique_values.issubset(allowed_values), \
+                f"Column {col} contains invalid values: {unique_values - allowed_values}"
+        
+        # Check max length for string columns
+        if rules["type"] == str and "max_length" in rules:
+            max_len = real_data[col].str.len().max()
+            assert max_len <= rules["max_length"], \
+                f"Column {col} has text longer than {rules['max_length']}: {max_len}"
         assert all(isinstance(x, rules["type"]) for x in real_data[col] if pd.notnull(x)), f"Invalid type in {col}"
 
         if not rules.get("null_allowed", True):
@@ -78,7 +102,7 @@ def test_feature_cost():
     y = np.load(args.y_test)
 
     # Infer base directory from X_test path and load params
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(args.X_test), ".."))
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(args.X_test), "..", ".."))
     config = load_params(path=os.path.join(base_dir, "params.yaml"))
 
     test_size = config["test_size"]
