@@ -12,13 +12,8 @@ import os
 
 import joblib
 import numpy as np
-from sklearn.metrics import (
-    accuracy_score,
-    confusion_matrix,
-    f1_score,
-    precision_score,
-    recall_score,
-)
+from sklearn.metrics import (accuracy_score, confusion_matrix, f1_score,
+                             precision_score, recall_score)
 
 
 def load_data(X_path, y_path):
@@ -70,7 +65,7 @@ def parse_args():
             X_test=os.path.join(base_dir, "data", "split", "X_test.npy"),
             y_test=os.path.join(base_dir, "data", "split", "y_test.npy"),
             model=os.path.join(base_dir, "output", "c2_Classifier_Sentiment_Model.pkl"),
-            metrics_output=os.path.join(base_dir, "metrics", "feature_costs.json")
+            metrics_output=os.path.join(base_dir, "metrics", "feature_costs.json"),
         )
     parser = argparse.ArgumentParser()
     parser.add_argument("--X_test", type=str, required=True)

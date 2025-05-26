@@ -28,7 +28,7 @@ def run_command(cmd: str, description: str) -> bool:
             capture_output=True,
             text=True,
             cwd=Path(__file__).parent.parent,
-            executable='/bin/bash'
+            executable="/bin/bash",
         )
         if result.returncode == 0:
             print(f"✅ {description} - SUCCESS")
@@ -52,10 +52,12 @@ def validate_file_exists(file_path: Path, description: str) -> bool:
         return False
 
 
-def validate_json_content(file_path: Path, required_keys: list, description: str) -> bool:
+def validate_json_content(
+    file_path: Path, required_keys: list, description: str
+) -> bool:
     """Validate that a JSON file contains required keys."""
     try:
-        with open(file_path, 'r') as f:
+        with open(file_path, "r") as f:
             data = json.load(f)
         missing_keys = [key for key in required_keys if key not in data]
         if missing_keys:
@@ -96,8 +98,9 @@ def main():
     # Step 3: Validate coverage.json
     total_checks += 1
     coverage_file = base_dir / "test_reports" / "coverage.json"
-    if validate_file_exists(coverage_file, "Coverage JSON file") and \
-       validate_json_content(coverage_file, ["totals"], "Coverage JSON content"):
+    if validate_file_exists(
+        coverage_file, "Coverage JSON file"
+    ) and validate_json_content(coverage_file, ["totals"], "Coverage JSON content"):
         success_count += 1
 
     # Step 4: Validate junit.xml
@@ -116,11 +119,17 @@ def main():
     total_checks += 1
     ml_score_file = base_dir / "test_reports" / "ml_test_score.json"
     required_keys = [
-        "overall_score", "metamorphic_score", "total_tests",
-        "passed_tests", "category_breakdown"
+        "overall_score",
+        "metamorphic_score",
+        "total_tests",
+        "passed_tests",
+        "category_breakdown",
     ]
-    if validate_file_exists(ml_score_file, "ML Test Score JSON file") and \
-       validate_json_content(ml_score_file, required_keys, "ML Test Score JSON content"):
+    if validate_file_exists(
+        ml_score_file, "ML Test Score JSON file"
+    ) and validate_json_content(
+        ml_score_file, required_keys, "ML Test Score JSON content"
+    ):
         success_count += 1
 
     # Step 7: Update README badges
@@ -134,9 +143,12 @@ def main():
     readme_file = base_dir / "README.md"
     if validate_file_exists(readme_file, "README.md file"):
         try:
-            with open(readme_file, 'r') as f:
+            with open(readme_file, "r") as f:
                 content = f.read()
-            if "<!-- AUTOMATED-BADGES -->" in content and "ML%20Test%20Score" in content:
+            if (
+                "<!-- AUTOMATED-BADGES -->" in content
+                and "ML%20Test%20Score" in content
+            ):
                 print("✅ README badges updated - VALID")
                 success_count += 1
             else:
@@ -153,7 +165,9 @@ def main():
         print("\n🎉 ALL CHECKS PASSED - ML Testing workflow is working correctly!")
         return 0
     else:
-        print(f"\n⚠️ {total_checks - success_count} CHECKS FAILED - Please review the issues above")
+        print(
+            f"\n⚠️ {total_checks - success_count} CHECKS FAILED - Please review the issues above"
+        )
         return 1
 
 

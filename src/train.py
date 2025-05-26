@@ -9,6 +9,7 @@ Training script for sentiment classifier using Gaussian Naive Bayes.
 import argparse
 import json
 import os
+
 import joblib
 import numpy as np
 import yaml
@@ -26,7 +27,9 @@ def parse_args():
             labels=os.path.join(base_dir, "data", "y.npy"),
             output=os.path.join(base_dir, "models"),
             split_output_dir=os.path.join(base_dir, "data", "split"),
-            train_metrics_output=os.path.join(base_dir, "metrics", "train_metrics.json")
+            train_metrics_output=os.path.join(
+                base_dir, "metrics", "train_metrics.json"
+            ),
         )
 
     parser = argparse.ArgumentParser()
@@ -68,10 +71,7 @@ def fit_naive_bayes(X_train, y_train, config):
     Trains and returns a GaussianNB model without saving.
     Useful for programmatic use.
     """
-    model = GaussianNB(
-        var_smoothing=config["var_smoothing"],
-        priors=config["priors"]
-    )
+    model = GaussianNB(var_smoothing=config["var_smoothing"], priors=config["priors"])
     model.fit(X_train, y_train)
     return model
 

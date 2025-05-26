@@ -9,6 +9,7 @@ from src.train import save_json, save_split_data
 from src.prepare_data import preprocess_and_save
 from src import evaluate
 
+
 def test_save_json_and_split_data():
     with tempfile.TemporaryDirectory() as tmpdir:
         # Test save_json
@@ -26,6 +27,7 @@ def test_save_json_and_split_data():
         assert np.array_equal(np.load(os.path.join(tmpdir, "X_test.npy")), X)
         assert np.array_equal(np.load(os.path.join(tmpdir, "y_test.npy")), y)
 
+
 def test_preprocess_and_save():
     # Create a fake dataset
     df = pd.DataFrame({"Review": ["good", "bad"], "Liked": [1, 0]})
@@ -41,6 +43,7 @@ def test_preprocess_and_save():
         assert os.path.exists(os.path.join(output_dir, "X.npy"))
         assert os.path.exists(os.path.join(output_dir, "y.npy"))
         assert os.path.exists(os.path.join(bow_dir, "c1_BoW_Sentiment_Model.pkl"))
+
 
 def test_evaluate_load_data_and_model_and_save_metrics():
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -74,6 +77,7 @@ def test_evaluate_load_data_and_model_and_save_metrics():
             loaded_metrics = json.load(f)
         assert loaded_metrics["accuracy"] == metrics["accuracy"]
 
+
 def test_evaluate_run_evaluation():
     with tempfile.TemporaryDirectory() as tmpdir:
         X = np.array([[1, 2], [3, 4]])
@@ -90,6 +94,7 @@ def test_evaluate_run_evaluation():
         metrics = evaluate.run_evaluation(X_path, y_path, model_path, metrics_path)
         assert os.path.exists(metrics_path)
         assert "accuracy" in metrics
+
 
 def test_evaluate_error_cases():
     # Test missing files

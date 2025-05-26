@@ -21,9 +21,11 @@ def parse_args():
     if "PYTEST_CURRENT_TEST" in os.environ:
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         return argparse.Namespace(
-            dataset=os.path.join(base_dir, "datasets", "a1_RestaurantReviews_HistoricDump.tsv"),
+            dataset=os.path.join(
+                base_dir, "datasets", "a1_RestaurantReviews_HistoricDump.tsv"
+            ),
             output_dir=os.path.join(base_dir, "data"),
-            bow_dir=os.path.join(base_dir, "output")
+            bow_dir=os.path.join(base_dir, "output"),
         )
 
     parser = argparse.ArgumentParser()

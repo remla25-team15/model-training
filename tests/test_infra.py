@@ -1,6 +1,8 @@
 from src.evaluate import evaluate_model
+
 # Choose an appropriate threshold for the model
 MIN_ACCURACY = 0.6
+
 
 # Maybe change test_data to validation_data
 def test_model_serving_validation(trained_model, test_data):
@@ -20,6 +22,8 @@ def test_model_serving_validation(trained_model, test_data):
 
     # Relative check vs previous version
     PREV_MODEL_ACCURACY = 0.70  # TODO: Replace with actual previous model accuracy
-    assert val_accuracy >= PREV_MODEL_ACCURACY * 0.95, (  # Allow 5% degradation (choose an appropriate threshold)
+    assert (
+        val_accuracy >= PREV_MODEL_ACCURACY * 0.95
+    ), (  # Allow 5% degradation (choose an appropriate threshold)
         f"Model accuracy dropped >5% from baseline {PREV_MODEL_ACCURACY:.2f}"
     )
