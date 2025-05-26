@@ -1,9 +1,9 @@
 import os
 
-import numpy as np
-import pytest
-import pandas as pd
 import joblib
+import numpy as np
+import pandas as pd
+import pytest
 
 # DATASET_PATH = "../datasets/a1_RestaurantReviews_HistoricDump.tsv"
 # TEST_DATA_DIR = "data/processed/test"

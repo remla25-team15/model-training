@@ -1,13 +1,15 @@
-import os
-import numpy as np
 import json
+import os
 import tempfile
-import pandas as pd
+
 import joblib
+import numpy as np
+import pandas as pd
 from sklearn.naive_bayes import GaussianNB
-from src.train import save_json, save_split_data
-from src.prepare_data import preprocess_and_save
+
 from src import evaluate
+from src.prepare_data import preprocess_and_save
+from src.train import save_json, save_split_data
 
 
 def test_save_json_and_split_data():

@@ -1,6 +1,7 @@
 from unittest import mock
 
-from src.get_data import download_from_drive, download_nltk_resources, run_get_data
+from src.get_data import (download_from_drive, download_nltk_resources,
+                          run_get_data)
 
 
 def test_download_from_drive_mocks_gdown():
