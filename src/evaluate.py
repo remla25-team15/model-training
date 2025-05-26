@@ -9,7 +9,6 @@ Evaluation script for a trained sentiment classifier.
 import argparse
 import json
 import os
-import sys
 
 import joblib
 import numpy as np
