@@ -1,12 +1,14 @@
 # Restaurant Sentiment Analysis – Model Training
 
 <!-- AUTOMATED-BADGES -->
+
 ![Test%20Coverage](https://img.shields.io/badge/Test%20Coverage-64.5%25-yellow)
 ![ML%20Test%20Score](https://img.shields.io/badge/ML%20Test%20Score-87.5/100-brightgreen)
 ![Metamorphic%20Tests](https://img.shields.io/badge/Metamorphic%20Tests-100.0%25-brightgreen)
 ![Pylint%20Score](https://img.shields.io/badge/Pylint%20Score-10.00/10-brightgreen)
 ![Code%20Quality](https://img.shields.io/badge/Code%20Quality-82.3%25-brightgreen)
 ![Tests](https://img.shields.io/badge/Tests-18/18%20passed-brightgreen)
+
 <!-- END-AUTOMATED-BADGES -->
 
 This repository contains the code to train a sentiment analysis model on restaurant reviews using a machine learning pipeline.
@@ -111,27 +113,46 @@ dvc pull
 
 ---
 
-## Linting (TODO)
+## Linting
 
-For now, there is a non-trivial pylintrc file but it needs to be improved to catch ML Specific code smells (refer Assignment 4 Code Quality excellent section).
+To ensure code quality and catch common issues, we use multiple linters with both general-purpose and ML-specific checks.
 
-You can run pylint right now:
+### Run pylint
 
 ```zsh
 pylint src/
 ```
 
-We also need to add more linters like flake8 and Bandit.
+We use a custom `pylintrc` and an internal `linters` module to flag common ML code smells, including:
+
+- **Uncontrolled randomness**: Ensures `random_seed` is set (https://hynn01.github.io/ml-smells/posts/codesmells/14-randomness-uncontrolled/)
+- **Implicit hyperparameters**: Verifies hyperparameters are explicitly set (https://hynn01.github.io/ml-smells/posts/codesmells/11-hyperparameter-not-explicitly-set/)
+- **Hardcoded dataset paths**: Flags absolute or hardcoded paths to datasets
+
+### flake8 and bandit
+
+We also use `flake8` for enforcing style conventions and complexity limits. It checks naming conventions, import order, and ensures docstrings follow the Google style. Complexity is capped to keep code maintainable, and common formatting issues (e.g. long lines) are controlled.
+
+`bandit` is used for static security analysis. It scans for risky functions (like `pickle` or `tarfile.extract`) and is configured to skip known safe exceptions. We exclude test and script directories to focus checks on the core source code.
+
+Run both tools from the project root:
+
+```zsh
+flake8 src/
+bandit -r src/
+```
 
 ---
 
 ## Testing
+
 There are some tests in the `tests/` directory following the ML Test Score methodology.
 You can run the tests using:
 
 ```bash
 pytest tests/
 ```
+
 You can also run the tests with coverage:
 
 ```bash
@@ -139,6 +160,7 @@ pytest --cov=src tests/
 ```
 
 Check cyclomatic complexity
+
 ```bash
 radon cc src/ -s -a
 ```
@@ -146,12 +168,14 @@ radon cc src/ -s -a
 --
 
 ## Testing
+
 There are some tests in the `tests/` directory following the ML Test Score methodology.
 You can run the tests using:
 
 ```bash
 pytest tests/
 ```
+
 You can also run the tests with coverage:
 
 ```bash
@@ -159,6 +183,7 @@ pytest --cov=src tests/
 ```
 
 Check cyclomatic complexity
+
 ```bash
 radon cc src/ -s -a
 ```
