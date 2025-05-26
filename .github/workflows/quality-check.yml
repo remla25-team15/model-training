@@ -1,13 +1,12 @@
-name: Test, Lint, and Quality Check
+name: Test and Quality Check
 
 on:
   push:
     branches:
       - main
-      - test-in-workflow
   pull_request:
     branches:
-      - test-in-workflow
+      - main
   workflow_dispatch:
 
 env:
@@ -19,7 +18,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -47,13 +46,6 @@ jobs:
       - name: Write GDrive SA key (if available)
         run: |
           echo '${{ secrets.GDRIVE_SA_KEY }}' > secrets/sa_key.json
-
-      - name: Set env for DVC (if SA key available)
-        run: echo "DVC_GDRIVE_SERVICE_ACCOUNT_JSON_FILE_PATH=secrets/sa_key.json" >> $GITHUB_ENV
-
-      - name: Download NLTK data
-        run: |
-          python -c "import nltk; nltk.download('punkt'); nltk.download('wordnet')"
 
       - name: Pull DVC data (if SA key available)
         run: |
@@ -83,7 +75,6 @@ jobs:
       - name: Calculate ML Test Score
         run: |
           python scripts/ml_test_score.py test_reports/junit.xml test_reports/ml_test_score.json
-
 
       - name: Update README with badges
         run: |
@@ -121,4 +112,3 @@ jobs:
             coverage.xml
             test_reports/coverage.json
             coverage_reports/
-

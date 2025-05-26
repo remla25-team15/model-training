@@ -1,5 +1,4 @@
 import numpy as np
-import pytest
 
 
 def test_feature_swap_mutamorphic_two_samples(trained_model, test_data):
@@ -18,4 +17,6 @@ def test_feature_swap_mutamorphic_two_samples(trained_model, test_data):
         x_swapped[i], x_swapped[j] = x_swapped[j], x_swapped[i]
         pred_orig = trained_model.predict([x_orig])[0]
         pred_swap = trained_model.predict([x_swapped])[0]
-        assert pred_orig == pred_swap, f"Swapping features {i} and {j} in sample {idx} changed the predicted class" 
+        assert (
+            pred_orig == pred_swap
+        ), f"Swapping features {i} and {j} in sample {idx} changed the predicted class"

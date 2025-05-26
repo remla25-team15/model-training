@@ -1,6 +1,5 @@
 import gdown
 import joblib
-import numpy as np
 import pandas as pd
 from libml import preprocessing as libml
 
@@ -20,10 +19,8 @@ messages = pd.read_csv(
     "../datasets/a1_RestaurantReviews_HistoricDump.tsv", delimiter="\t", quoting=3
 )
 X = libml._preprocess(messages).toarray()
-exampleInput = X[0]  # Use the first example from the dataset
-print(f"Example input: {exampleInput}")
+example_input = X[0]  # Use the first example from the dataset
+print(f"Example input: {example_input}")
 
-prediction = model.predict(
-    exampleInput.reshape(1, -1)
-)  # Reshape to 2D array for prediction
+prediction = model.predict(example_input.reshape(1, -1))
 print(f"Prediction: {prediction}")

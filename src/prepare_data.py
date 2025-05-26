@@ -21,9 +21,11 @@ def parse_args():
     if "PYTEST_CURRENT_TEST" in os.environ:
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         return argparse.Namespace(
-            dataset=os.path.join(base_dir, "datasets", "a1_RestaurantReviews_HistoricDump.tsv"),
+            dataset=os.path.join(
+                base_dir, "datasets", "a1_RestaurantReviews_HistoricDump.tsv"
+            ),
             output_dir=os.path.join(base_dir, "data"),
-            bow_dir=os.path.join(base_dir, "output")
+            bow_dir=os.path.join(base_dir, "output"),
         )
 
     parser = argparse.ArgumentParser()
@@ -31,6 +33,7 @@ def parse_args():
     parser.add_argument("--output_dir", type=str, required=True)
     parser.add_argument("--bow_dir", type=str, required=True)
     return parser.parse_args()
+
 
 def preprocess_and_save(dataset_path, output_dir, bow_dir):
     os.makedirs(output_dir, exist_ok=True)
@@ -46,6 +49,7 @@ def preprocess_and_save(dataset_path, output_dir, bow_dir):
     with open(os.path.join(bow_dir, "c1_BoW_Sentiment_Model.pkl"), "wb") as f:
         pickle.dump(cv, f)
     return X, y
+
 
 def main():
     args = parse_args()

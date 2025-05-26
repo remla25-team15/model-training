@@ -7,6 +7,7 @@ Download raw datasets and required NLTK corpora for sentiment analysis.
 
 import argparse
 import os
+
 import gdown
 import nltk
 
@@ -36,18 +37,20 @@ def download_nltk_resources():
         return True
 
 
-def run_get_data(output_dir="datasets", nltk_dir=None, file_ids=None, output_names=None):
+def run_get_data(
+    output_dir="datasets", nltk_dir=None, file_ids=None, output_names=None
+):
     os.makedirs(output_dir, exist_ok=True)
     # Defaults for DVC pipeline
     if file_ids is None:
         file_ids = [
             "1_SHjQJVxZdr_LW2aIHAiOSBPWWGWd7Bs",
-            "1-8lz8Kf6XjQdeOZ1Hew1ysxpGz6ZOEg6"
+            "1-8lz8Kf6XjQdeOZ1Hew1ysxpGz6ZOEg6",
         ]
     if output_names is None:
         output_names = [
             "a1_RestaurantReviews_HistoricDump.tsv",
-            "a2_RestaurantReviews_FreshDump.tsv"
+            "a2_RestaurantReviews_FreshDump.tsv",
         ]
     downloaded = []
     for file_id, name in zip(file_ids, output_names):

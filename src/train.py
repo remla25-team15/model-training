@@ -5,13 +5,6 @@ Training script for sentiment classifier using Gaussian Naive Bayes.
 - Either trains on the full dataset or performs a train/test split.
 - Saves the trained model and optionally the test set for evaluation.
 """
-"""
-Training script for sentiment classifier using Gaussian Naive Bayes.
-
-- Loads preprocessed data (X and y).
-- Either trains on the full dataset or performs a train/test split.
-- Saves the trained model and optionally the test set for evaluation.
-"""
 
 import argparse
 import json
@@ -25,8 +18,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
 
-
-
 def parse_args():
     # Avoid parsing args when run inside pytest
     if "PYTEST_CURRENT_TEST" in os.environ:
@@ -36,7 +27,9 @@ def parse_args():
             labels=os.path.join(base_dir, "data", "y.npy"),
             output=os.path.join(base_dir, "models"),
             split_output_dir=os.path.join(base_dir, "data", "split"),
-            train_metrics_output=os.path.join(base_dir, "metrics", "train_metrics.json")
+            train_metrics_output=os.path.join(
+                base_dir, "metrics", "train_metrics.json"
+            ),
         )
 
     parser = argparse.ArgumentParser()
@@ -78,10 +71,7 @@ def fit_naive_bayes(X_train, y_train, config):
     Trains and returns a GaussianNB model without saving.
     Useful for programmatic use.
     """
-    model = GaussianNB(
-        var_smoothing=config["var_smoothing"],
-        priors=config["priors"]
-    )
+    model = GaussianNB(var_smoothing=config["var_smoothing"], priors=config["priors"])
     model.fit(X_train, y_train)
     return model
 
