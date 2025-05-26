@@ -4,6 +4,8 @@
 ![Test%20Coverage](https://img.shields.io/badge/Test%20Coverage-64.5%25-yellow)
 ![ML%20Test%20Score](https://img.shields.io/badge/ML%20Test%20Score-87.5/100-brightgreen)
 ![Metamorphic%20Tests](https://img.shields.io/badge/Metamorphic%20Tests-100.0%25-brightgreen)
+![Pylint%20Score](https://img.shields.io/badge/Pylint%20Score-10.00/10-brightgreen)
+![Code%20Quality](https://img.shields.io/badge/Code%20Quality-82.3%25-brightgreen)
 ![Tests](https://img.shields.io/badge/Tests-18/18%20passed-brightgreen)
 <!-- END-AUTOMATED-BADGES -->
 
