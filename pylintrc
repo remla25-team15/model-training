@@ -197,6 +197,7 @@ good-names=i,
            Run,
            X_train,
            X_test,
+           X_path,
            X,
            _
 
@@ -348,7 +349,7 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=100
+max-line-length=130
 
 # Maximum number of lines in a module.
 max-module-lines=1000
@@ -651,4 +652,5 @@ redefining-builtins-modules=six.moves,past.builtins,future.builtins,builtins,io
 
 
 [MASTER]
-load-plugins=linting.ml_code_smell_checker
+init-hook='import sys; sys.path.insert(0, "./linters")'
+load-plugins=pylint_ml_plugin

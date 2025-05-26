@@ -18,6 +18,15 @@ from libml import preprocessing as libml
 
 
 def parse_args():
+    """
+    Parses command-line arguments or sets defaults during pytest runs.
+
+    Returns:
+        argparse.Namespace: Parsed arguments with attributes:
+            - dataset (str): Path to the input dataset TSV file.
+            - output_dir (str): Directory where processed numpy arrays will be saved.
+            - bow_dir (str): Directory where the vectorizer pickle will be saved.
+    """
     if "PYTEST_CURRENT_TEST" in os.environ:
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
         return argparse.Namespace(
@@ -36,6 +45,19 @@ def parse_args():
 
 
 def preprocess_and_save(dataset_path, output_dir, bow_dir):
+    """
+    Loads dataset, applies preprocessing, and saves features, labels, and vectorizer.
+
+    Args:
+        dataset_path (str): Path to the input TSV dataset file.
+        output_dir (str): Directory where numpy arrays (X.npy, y.npy) will be saved.
+        bow_dir (str): Directory where the vectorizer pickle file will be saved.
+
+    Returns:
+        tuple:
+            - X (np.ndarray): Preprocessed feature matrix.
+            - y (np.ndarray): Label array.
+    """
     os.makedirs(output_dir, exist_ok=True)
     os.makedirs(bow_dir, exist_ok=True)
 
@@ -52,6 +74,9 @@ def preprocess_and_save(dataset_path, output_dir, bow_dir):
 
 
 def main():
+    """
+    Main function to parse arguments and run the preprocessing pipeline.
+    """
     args = parse_args()
     preprocess_and_save(args.dataset, args.output_dir, args.bow_dir)
 

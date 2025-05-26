@@ -57,9 +57,13 @@ jobs:
           dvc repro || echo "DVC repro failed, continuing with existing models"
         continue-on-error: true
 
-      - name: Run pylint with human-readable output
+      - name: Run pylint and save score
         run: |
-          pylint src/ --reports=y || true
+          pylint_output=$(pylint src/ --reports=y || true)
+          echo "$pylint_output"
+          # Extract pylint score from the output, e.g. "Your code has been rated at 8.45/10"
+          score=$(echo "$pylint_output" | grep "Your code has been rated at" | sed -E 's/.*rated at ([0-9\.]+)\/10.*/\1/')
+          echo "{\"score\": $score}" > test_reports/pylint_score.json
 
       - name: Run tests with coverage
         run: |

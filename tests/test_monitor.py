@@ -2,9 +2,10 @@
 Monitoring
 """
 
+import time
+
 import numpy as np
 from memory_profiler import memory_usage
-import time
 
 SAMPLE_INPUT = np.random.rand(1, 1421)
 
