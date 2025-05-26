@@ -15,4 +15,10 @@ scikit-learn
 radon
 memory_profiler
 flake8
+flake8-bugbear
+flake8-docstrings
+flake8-comprehensions
+flake8-eradicate
+pep8-naming
+flake8-import-order
 bandit

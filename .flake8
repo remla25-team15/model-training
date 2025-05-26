@@ -1,4 +1,23 @@
 [flake8]
-max-line-length = 100
+max-line-length = 130
 exclude = .git,__pycache__,venv,old-scripts,tests
-ignore = E203, W503
+ignore = E203, W503 
+
+# Enable naming convention checks
+[pep8-naming]
+# N803: argument name should be lowercase
+# N802: function name should be lowercase
+# N806: variable in function should be lowercase
+
+# D-style docstring checks (from flake8-docstrings)
+docstring-convention = google
+
+# Enable complexity threshold
+max-complexity = 10  # Lower = stricter
+
+# Import order
+import-order-style = google
+application-import-names = mypackage
+
+# Eradicate (commented out code detection)
+eradicate-aggressive = True
