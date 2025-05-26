@@ -19,6 +19,19 @@ from sklearn.naive_bayes import GaussianNB
 
 
 def parse_args():
+    """
+    Parse command-line arguments for the training script.
+
+    Special handling is included to avoid parsing arguments when running inside pytest.
+
+    Returns:
+        argparse.Namespace: Parsed arguments with attributes:
+            - data (str): Path to the input features (X) NumPy file.
+            - labels (str): Path to the input labels (y) NumPy file.
+            - output (str): Directory to save the trained model.
+            - split_output_dir (str, optional): Directory to save test split data.
+            - train_metrics_output (str, optional): File path to save training metrics JSON.
+    """
     # Avoid parsing args when run inside pytest
     if "PYTEST_CURRENT_TEST" in os.environ:
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -42,6 +55,22 @@ def parse_args():
 
 
 def load_params(path="params.yaml"):
+    """
+    Load training configuration parameters from a YAML file.
+
+    Extracts settings for training behavior, test split size, random seed, and model hyperparameters.
+
+    Args:
+        path (str, optional): Path to the YAML config file. Defaults to "params.yaml".
+
+    Returns:
+        dict: Configuration dictionary with keys:
+            - train_all (bool): Whether to train on full dataset without splitting.
+            - test_size (float): Proportion of data to reserve for testing.
+            - random_state (int): Random seed for reproducibility.
+            - priors (list or None): Prior probabilities for GaussianNB.
+            - var_smoothing (float): Variance smoothing parameter for GaussianNB.
+    """
     with open(path, "r", encoding="utf-8") as f:
         params = yaml.safe_load(f)
     train = params.get("train", {})
@@ -55,12 +84,31 @@ def load_params(path="params.yaml"):
 
 
 def save_json(path, obj):
+    """
+    Save a Python object as a formatted JSON file.
+
+    Creates the directory path if it does not exist.
+
+    Args:
+        path (str): File path where JSON data will be saved.
+        obj (object): The Python object (e.g., dict) to serialize.
+    """
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, indent=2)
 
 
 def save_split_data(output_dir, X_test, y_test):
+    """
+    Save test split feature and label arrays as NumPy files.
+
+    Creates the output directory if it does not exist.
+
+    Args:
+        output_dir (str): Directory to save the test split data.
+        X_test (np.ndarray): Test set features.
+        y_test (np.ndarray): Test set labels.
+    """
     os.makedirs(output_dir, exist_ok=True)
     np.save(os.path.join(output_dir, "X_test.npy"), X_test)
     np.save(os.path.join(output_dir, "y_test.npy"), y_test)
@@ -103,6 +151,11 @@ def train_model(X, y, config, args):
 
 
 def main():
+    """
+    Main entry point for the training script.
+
+    Parses command-line arguments, loads configuration and data, then initiates the training process.
+    """
     args = parse_args()
     config = load_params()
     X = np.load(args.data)

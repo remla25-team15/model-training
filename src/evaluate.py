@@ -17,19 +17,46 @@ from sklearn.metrics import (accuracy_score, confusion_matrix, f1_score,
 
 
 def load_data(X_path, y_path):
-    """Load test features and labels."""
+    """
+    Load test features and labels from NumPy files.
+
+    Args:
+        X_path (str): Path to the test features (.npy file).
+        y_path (str): Path to the test labels (.npy file).
+
+    Returns:
+        tuple: (X_test, y_test) numpy arrays.
+    """
     X_test = np.load(X_path)
     y_test = np.load(y_path)
     return X_test, y_test
 
 
 def load_model(model_path):
-    """Load trained model from disk."""
+    """
+    Load a trained model from disk using joblib.
+
+    Args:
+        model_path (str): Path to the saved model file.
+
+    Returns:
+        object: Loaded model instance.
+    """
     return joblib.load(model_path)
 
 
 def evaluate_model(model, X_test, y_test):
-    """Predict and compute evaluation metrics."""
+    """
+    Predict on test data and compute evaluation metrics.
+
+    Args:
+        model (object): Trained model with a predict method.
+        X_test (np.ndarray): Test features.
+        y_test (np.ndarray): True test labels.
+
+    Returns:
+        dict: Dictionary containing accuracy, precision, recall, f1_score, and confusion matrix.
+    """
     y_pred = model.predict(X_test)
     metrics = {
         "accuracy": accuracy_score(y_test, y_pred),
@@ -42,7 +69,16 @@ def evaluate_model(model, X_test, y_test):
 
 
 def save_metrics(metrics, output_path):
-    """Save metrics dictionary as a JSON file."""
+    """
+    Save evaluation metrics to a JSON file.
+
+    Args:
+        metrics (dict): Dictionary of evaluation metrics.
+        output_path (str): Path where metrics JSON file will be saved.
+
+    Returns:
+        str: The output path where metrics were saved.
+    """
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(metrics, f, indent=2)
@@ -50,6 +86,18 @@ def save_metrics(metrics, output_path):
 
 
 def run_evaluation(X_path, y_path, model_path, metrics_output_path):
+    """
+    Full evaluation pipeline: load data, model, evaluate, and save metrics.
+
+    Args:
+        X_path (str): Path to test features file.
+        y_path (str): Path to test labels file.
+        model_path (str): Path to saved model file.
+        metrics_output_path (str): Path to save the evaluation metrics JSON.
+
+    Returns:
+        dict: Dictionary of evaluation metrics.
+    """
     X_test, y_test = load_data(X_path, y_path)
     model = load_model(model_path)
     metrics = evaluate_model(model, X_test, y_test)
@@ -58,6 +106,18 @@ def run_evaluation(X_path, y_path, model_path, metrics_output_path):
 
 
 def parse_args():
+    """
+    Parse command-line arguments for evaluation script.
+
+    Special handling to avoid parsing when running under pytest.
+
+    Returns:
+        argparse.Namespace: Parsed arguments including:
+            - X_test (str): Path to test features.
+            - y_test (str): Path to test labels.
+            - model (str): Path to trained model file.
+            - metrics_output (str): Path to save metrics JSON.
+    """
     # Avoid parsing args when run inside pytest
     if "PYTEST_CURRENT_TEST" in os.environ:
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -77,6 +137,12 @@ def parse_args():
 
 
 def main():
+    """
+    Main function to run the evaluation pipeline.
+
+    Parses arguments, runs evaluation, and prints accuracy.
+    """
+    np.random.seed(42)
     args = parse_args()
     metrics = run_evaluation(args.X_test, args.y_test, args.model, args.metrics_output)
     print(f"Evaluation complete. Accuracy: {metrics['accuracy']}")

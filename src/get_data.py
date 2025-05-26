@@ -37,9 +37,23 @@ def download_nltk_resources():
         return True
 
 
-def run_get_data(
-    output_dir="datasets", nltk_dir=None, file_ids=None, output_names=None
-):
+def run_get_data(output_dir="datasets", file_ids=None, output_names=None):
+    """
+    Download datasets from Google Drive and ensure required NLTK corpora are available.
+
+    If `file_ids` and `output_names` are not provided, defaults are used
+    corresponding to project-specific datasets for sentiment analysis.
+
+    Args:
+        output_dir (str, optional): Directory to save downloaded datasets. Defaults to "datasets".
+        file_ids (list[str], optional): List of Google Drive file IDs to download. Defaults to None.
+        output_names (list[str], optional): Corresponding filenames to save downloaded files. Defaults to None.
+
+    Returns:
+        dict: A summary dictionary with keys:
+            - 'downloaded' (list[str]): List of paths to downloaded files.
+            - 'nltk_downloaded' (bool): Whether the NLTK 'wordnet' corpus was downloaded.
+    """
     os.makedirs(output_dir, exist_ok=True)
     # Defaults for DVC pipeline
     if file_ids is None:
@@ -74,14 +88,8 @@ def main():
         default="datasets",
         help="Directory to save downloaded files.",
     )
-    parser.add_argument(
-        "--nltk_dir",
-        type=str,
-        default="nltk_data",
-        help="Directory to save NLTK data.",
-    )
     args = parser.parse_args()
-    summary = run_get_data(output_dir=args.output_dir, nltk_dir=args.nltk_dir)
+    summary = run_get_data(output_dir=args.output_dir)
     print("Downloaded:", summary["downloaded"])
     print("NLTK wordnet downloaded:", summary["nltk_downloaded"])
 
