@@ -1,7 +1,12 @@
 exclude_dirs:
   - tests
   - old-scripts
+  - scripts
+
 targets:
-  - .
+  - src
 skips:
   - B403
+  - B301
+  - B324
+

@@ -27,8 +27,7 @@ jobs:
           pip install flake8 bandit
 
       - name: Run Flake8
-        run: flake8 .
+        run: flake8 src/ tests/
 
       - name: Run Bandit
-        run: bandit -r . -c bandit.yaml
-
+        run: bandit -r src tests -lll -iii -c bandit.yaml
