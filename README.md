@@ -28,6 +28,8 @@ It includes Docker support for reproducibility and a GitHub Actions workflow to 
 You need to have an API key to access the DVC remote. A4 reviewers can find a temporary API key `sa_key.json` on the peer platform. Please copy
 the JSON file to a `secrets/` folder at the root of this repo.
 
+For examiners, we will have submitted the code as a zip file on brightspace which should already contain this API key in the `secrets/` folder.
+
 Reviewers should confirm that the `.dvc/config` looks like this:
 
 ```vim
